@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
 
+import codediagramcreation.languageScanners.Supported;
+
 public class App {
     
     public String getGreeting() {
@@ -12,7 +14,14 @@ public class App {
     }
 
     public String supportedLanguages(){
-        return "none";
+        String output;
+        // Get all classes in the package "your.package.name"
+        Package pkg = Package.getPackage("codediagramcreation.languageScanners");
+        for (Class<?> clazz : pkg.getClasses()) {
+            if (clazz.isAnnotationPresent(Supported.class)) {
+                output = output + " " + clazz.getName();
+            }
+        }
     }
 
 
