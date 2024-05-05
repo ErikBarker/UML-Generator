@@ -4,24 +4,55 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+
 
 import codediagramcreation.languageScanners.Supported;
 
 public class App {
     
     public String getGreeting() {
-        return "Welcome, Please choose a directory you would like to generate a diagram for: this program currently supports " + supportedLanguages();
+        try {
+            return "Welcome, Please choose a directory you would like to generate a diagram for: this program currently supports " + supportedLanguages();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
-    public String supportedLanguages(){
-        String output;
-        // Get all classes in the package "your.package.name"
-        Package pkg = Package.getPackage("codediagramcreation.languageScanners");
-        for (Class<?> clazz : pkg.getClasses()) {
+    public String supportedLanguages() throws ClassNotFoundException, IOException{
+        String output = "";
+
+        // Define the package name
+        String packageName = "codediagramcreation";
+
+        // Get the ClassLoader
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
+        // Get all class names in the package
+        List<Class<?>> classes = getClassesInPackage(packageName, classLoader);
+
+        // Iterate through the classes and check for @Supported annotation
+        for (Class<?> clazz : classes) {
             if (clazz.isAnnotationPresent(Supported.class)) {
-                output = output + " " + clazz.getName();
+                output = output +" " + clazz.getName();
             }
         }
+        return output;
+    }
+
+    private static List<Class<?>> getClassesInPackage(String packageName, ClassLoader classLoader) throws ClassNotFoundException, IOException {
+        List<Class<?>> classes = new ArrayList<>();
+        String path = packageName.replace('.', '/');
+        for (java.net.URL resource : java.util.Collections.list(classLoader.getResources(path))) {
+            if (resource.getPath().startsWith("file:") && resource.getPath().endsWith(".class")) {
+                String className = resource.getPath().substring(resource.getPath().lastIndexOf("/") + 1);
+                className = className.substring(0, className.length() - 6); // Remove ".class"
+                classes.add(Class.forName(packageName + "." + className));
+            }
+        }
+        return classes;
     }
 
 
