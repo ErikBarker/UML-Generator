@@ -41,6 +41,9 @@ public class App {
                 output = output +" " + clazz.getName().replaceFirst("codediagramcreation.languageScanners.", "");
             }
         }
+        if (output.isEmpty()) {
+            return "none";
+        }
         return output;
     }
 

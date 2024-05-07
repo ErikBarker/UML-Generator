@@ -1,6 +1,6 @@
 package codediagramcreation.languageScanners;
 
-@Supported
+//@Supported
 public class java {
     
 }
