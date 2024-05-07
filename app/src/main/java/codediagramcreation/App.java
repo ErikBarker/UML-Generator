@@ -1,12 +1,14 @@
 package codediagramcreation;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.Enumeration;
 
 import codediagramcreation.languageScanners.Supported;
 
@@ -14,7 +16,7 @@ public class App {
     
     public String getGreeting() {
         try {
-            return "Welcome, Please choose a directory you would like to generate a diagram for: this program currently supports " + supportedLanguages();
+            return "Welcome, Please choose a directory you would like to generate a diagram for: this program currently supports:" + supportedLanguages();
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
@@ -25,7 +27,7 @@ public class App {
         String output = "";
 
         // Define the package name
-        String packageName = "codediagramcreation";
+        String packageName = "codediagramcreation.languageScanners";
 
         // Get the ClassLoader
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -36,24 +38,39 @@ public class App {
         // Iterate through the classes and check for @Supported annotation
         for (Class<?> clazz : classes) {
             if (clazz.isAnnotationPresent(Supported.class)) {
-                output = output +" " + clazz.getName();
+                output = output +" " + clazz.getName().replaceFirst("codediagramcreation.languageScanners.", "");
             }
         }
         return output;
     }
 
-    private static List<Class<?>> getClassesInPackage(String packageName, ClassLoader classLoader) throws ClassNotFoundException, IOException {
+    private static List<Class<?>> getClassesInPackage(String packageName, ClassLoader classLoader) throws IOException, ClassNotFoundException {
         List<Class<?>> classes = new ArrayList<>();
         String path = packageName.replace('.', '/');
-        for (java.net.URL resource : java.util.Collections.list(classLoader.getResources(path))) {
-            if (resource.getPath().startsWith("file:") && resource.getPath().endsWith(".class")) {
-                String className = resource.getPath().substring(resource.getPath().lastIndexOf("/") + 1);
-                className = className.substring(0, className.length() - 6); // Remove ".class"
-                classes.add(Class.forName(packageName + "." + className));
+        Enumeration<URL> resources = classLoader.getResources(path);
+        while (resources.hasMoreElements()) {
+            URL resource = resources.nextElement();
+            if (resource.getProtocol().equals("file")) {
+                File directory = new File(resource.getFile());
+                if (directory.exists()) {
+                    // Iterate over .class files in the directory
+                    File[] files = directory.listFiles();
+                    if (files != null) {
+                        for (File file : files) {
+                            if (file.isFile() && file.getName().endsWith(".class")) {
+                                String className = packageName + '.' + file.getName().substring(0, file.getName().length() - 6);
+                                Class<?> clazz = Class.forName(className);
+                                classes.add(clazz);
+                            }
+                        }
+                    }
+                }
             }
         }
         return classes;
     }
+    
+
 
 
     public static void main(String[] args) throws IOException {
