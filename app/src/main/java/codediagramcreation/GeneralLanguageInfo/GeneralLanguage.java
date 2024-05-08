@@ -44,14 +44,44 @@ package codediagramcreation.GeneralLanguageInfo;
 public class GeneralLanguage {
     
     
-    public static String generateClass(String[] connections, String[] accessingDeclaration, String className, String[] vars, String[] methods){
+    public static String generateClass(String[] connections, String className){
 
+        String classString = "";
+        
+        for (String string : connections) {
+            classString += string + " ";
+        }
+        
+        classString += className;
 
-
-
-        return "";
+        return classString;
     }
 
+    /**
+     * Generates a Method to the general language format for the diagram generator to understand
+     * 
+     * <p>
+     * METHODS
+     * </p>
+     *  +|-|# varName( params[optional] ):type static[optonal:Bool]
+     * </p>
+     *  Examples:
+     * <p>
+     *  <blockquote><pre>
+     *{@code "+ Temp():int true"}
+     *{@code "- Temp(currentstate:bool):bool false"}
+     *{@code "# foo():CustomClass false"}
+     *  </pre></blockquote>
+     * </p>
+     * <p>
+     * 
+     * @param accessingDeclaration an array containing the accesing delcarations for a varible following the format [{@code public}|{@code private}|{@code protected}, {@code static}] 
+     * including the part of the array for static is optional
+     * @param returntype what the method returns (optonal)
+     * @param methodName the name of the method
+     * @param params the paramiters for the method, you can use {@code GeneralLanguage.generateVar()} with no accesing methods in the array to make the paramiters (optonal)
+     * @return
+     */
     public static String generateMethod(String[] accessingDeclaration, String returntype, String methodName, String[] params){
         boolean isStatic = false;
         String method = "";
@@ -83,7 +113,7 @@ public class GeneralLanguage {
             method += ":" + returntype;
         }
 
-        method += isStatic;
+        method += " " + isStatic;
 
         return method;
     }
@@ -118,22 +148,29 @@ public class GeneralLanguage {
             isStatic = true;
         }
 
-        //sorts the type of accesingDeclaration to a enum
-        if (accessingDeclaration[0].equals("public")) {
-            accessingDecEnum = accesingDeclarations.pub;
-        } else if (accessingDeclaration[0].equals("private")) {
-            accessingDecEnum = accesingDeclarations.prv;
-        } else if (accessingDeclaration[0].equals("protected")) {
-            accessingDecEnum = accesingDeclarations.pro;
+        if (accessingDeclaration.length > 0) {  
+            //sorts the type of accesingDeclaration to a enum
+            if (accessingDeclaration[0].equals("public")) {
+                accessingDecEnum = accesingDeclarations.pub;
+            } else if (accessingDeclaration[0].equals("private")) {
+                accessingDecEnum = accesingDeclarations.prv;
+            } else if (accessingDeclaration[0].equals("protected")) {
+                accessingDecEnum = accesingDeclarations.pro;
+            }
+
+            varOutput += accessingDecEnum.toString() + " ";
         }
 
-        varOutput += accessingDecEnum.toString() + " " + varName;
+        varOutput += varName;
 
         if (!varType.isBlank()) {
             varOutput += ":" + varType;
         }
 
-        varOutput += isStatic;
+        if (accessingDeclaration.length > 0) {
+            varOutput += " " + isStatic;
+        }
+        
 
         return  varOutput;
     }

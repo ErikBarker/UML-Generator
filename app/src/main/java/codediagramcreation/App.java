@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import codediagramcreation.GeneralLanguageInfo.GeneralLanguage;
 import codediagramcreation.languageScanners.Supported;
 
 public class App {
@@ -90,9 +91,11 @@ public class App {
 
             directorySearch.Search(input);
         }
-
         
-
+        
+        System.out.println(GeneralLanguage.generateVar(new String[]{"public", "true"}, "testvar", "int"));
+        System.out.println(GeneralLanguage.generateMethod(new String[]{"private", "true"}, "void", "testmethod", new String[]{GeneralLanguage.generateVar(new String[]{}, "time", "int"), GeneralLanguage.generateVar(new String[]{}, "isOn", "bool")}));
+        System.out.println(GeneralLanguage.generateClass(new String[]{"String"}, "testclass"));
         createDiagram();
     }
 
