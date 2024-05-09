@@ -12,6 +12,7 @@ import java.util.Enumeration;
 
 import codediagramcreation.GeneralLanguageInfo.GeneralLanguage;
 import codediagramcreation.languageScanners.Supported;
+import codediagramcreation.languageScanners.javaScanner;
 
 public class App {
     
@@ -92,6 +93,11 @@ public class App {
             directorySearch.Search(input);
         }
         
+        for (File file : directorySearch.getFiles()) {
+            if (file.getAbsolutePath().endsWith(".java")) {
+                javaScanner.scanFile(file);
+            }
+        }
         
         System.out.println(GeneralLanguage.generateVar(new String[]{"public", "true"}, "testvar", "int"));
         System.out.println(GeneralLanguage.generateMethod(new String[]{"private", "true"}, "void", "testmethod", new String[]{GeneralLanguage.generateVar(new String[]{}, "time", "int"), GeneralLanguage.generateVar(new String[]{}, "isOn", "bool")}));

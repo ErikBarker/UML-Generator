@@ -8,7 +8,12 @@ import java.util.ArrayList;
 public class directorySearch {
 
     private static ArrayList<Object> files = new ArrayList<Object>();
+    private static ArrayList<File> fileList = new ArrayList<File>();
     
+    public static ArrayList<File> getFiles() {
+        return fileList;
+    }
+
     /**
      * 
      * @param dir the directory to be searched
@@ -96,6 +101,7 @@ public class directorySearch {
                 for (int j = 0; j < line; j++) {
                     System.out.print("| ");
                 }
+                fileList.add((File)list.get(i));
                 System.out.println(((File)list.get(i)).getName());
             }  
         }
