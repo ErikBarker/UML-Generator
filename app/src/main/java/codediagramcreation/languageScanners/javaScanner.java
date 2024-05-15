@@ -19,7 +19,14 @@ public class javaScanner {
 
         while (fileReader.hasNext()) {
             currentline = fileReader.nextLine();
-
+            if (currentline.contains("//")) {
+                continue;
+            } else if (currentline.contains("/*")||currentline.contains("/**")) {
+                while (fileReader.hasNext() && !currentline.contains("*/")) {
+                    currentline = fileReader.nextLine();
+                    continue;
+                }
+            }
             javaClass();
         }
     }
@@ -27,17 +34,18 @@ public class javaScanner {
     private static void javaClass(){
         
         String[] accessingDeclaration = new String[2];
-        String name;
-        if (currentline.contains("Class") || currentline.contains("class")) {
+        String name = null;
+        // @TODO fix scaning recurtion
+        if (currentline.contains(" Class ") || currentline.contains(" class ") || currentline.contains(" Class{") || currentline.contains(" class{")) {
             currentlinearray = currentline.split(" ");
 
             for (int i = 0; i < accessingDeclaration.length; i++) {
-                if (currentlinearray[i].equals("public") || currentlinearray[i].equals("private") || currentlinearray[i].equals("protected")) {
+                if (currentlinearray[i].equalsIgnoreCase("public") || currentlinearray[i].equalsIgnoreCase("private") || currentlinearray[i].equalsIgnoreCase("protected")) {
                     accessingDeclaration[0] = currentlinearray[i];
                 } else if (currentlinearray[i].equals("static")) {
                     accessingDeclaration[1] = currentlinearray[i];
-                } else {
-                    name = currentlinearray[i];
+                } else if(currentlinearray[i].equalsIgnoreCase("class")){
+                    name = currentlinearray[i+1];
 
                     if (name.contains("{")) {
                         name = name.replace("{", "");
@@ -45,7 +53,7 @@ public class javaScanner {
                 }
             }
 
-            GeneralLanguage.generateClass();
+           System.out.println( GeneralLanguage.generateClass(new String[]{}, accessingDeclaration[0], name));
 
         }
     }

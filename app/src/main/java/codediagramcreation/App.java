@@ -101,7 +101,7 @@ public class App {
         
         System.out.println(GeneralLanguage.generateVar(new String[]{"public", "true"}, "testvar", "int"));
         System.out.println(GeneralLanguage.generateMethod(new String[]{"private", "true"}, "void", "testmethod", new String[]{GeneralLanguage.generateVar(new String[]{}, "time", "int"), GeneralLanguage.generateVar(new String[]{}, "isOn", "bool")}));
-        System.out.println(GeneralLanguage.generateClass(new String[]{"String"}, "testclass"));
+        System.out.println(GeneralLanguage.generateClass(new String[]{"String"},"protected", "testclass"));
         createDiagram();
     }
 

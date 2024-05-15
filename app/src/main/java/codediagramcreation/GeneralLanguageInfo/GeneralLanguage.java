@@ -44,15 +44,27 @@ package codediagramcreation.GeneralLanguageInfo;
 public class GeneralLanguage {
     
     
-    public static String generateClass(String[] connections, String className){
+    public static String generateClass(String[] connections, String accessingDeclaration, String className){
 
         String classString = "";
-        
-        for (String string : connections) {
-            classString += string + " ";
+        accesingDeclarations accessingDecEnum = accesingDeclarations.pub;
+
+
+        if (accessingDeclaration.equals("public")) {
+            accessingDecEnum = accesingDeclarations.pub;
+        } else if (accessingDeclaration.equals("private")) {
+            accessingDecEnum = accesingDeclarations.prv;
+        } else if (accessingDeclaration.equals("protected")) {
+            accessingDecEnum = accesingDeclarations.pro;
         }
         
-        classString += className;
+        for (String string : connections) {
+            if (string != null) {
+                classString += string + " ";
+            }
+        }
+        
+        classString += accessingDecEnum + " " + className;
 
         return classString;
     }
