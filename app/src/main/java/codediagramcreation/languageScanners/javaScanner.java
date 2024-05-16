@@ -28,14 +28,19 @@ public class javaScanner {
                 }
             }
             javaClass();
+            javaMethod();
+            javaVar();
         }
     }
+
+
+    
 
     private static void javaClass(){
         
         String[] accessingDeclaration = new String[2];
         String name = null;
-        // @TODO fix scaning recurtion
+        
         if (currentline.contains(" Class ") || currentline.contains(" class ") || currentline.contains(" Class{") || currentline.contains(" class{")) {
             currentlinearray = currentline.split(" ");
 
@@ -56,5 +61,16 @@ public class javaScanner {
            System.out.println( GeneralLanguage.generateClass(new String[]{}, accessingDeclaration[0], name));
 
         }
+    }
+
+    private static void javaMethod() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'javaMethod'");
+    }
+
+    
+    private static void javaVar() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'javaVar'");
     }
 }

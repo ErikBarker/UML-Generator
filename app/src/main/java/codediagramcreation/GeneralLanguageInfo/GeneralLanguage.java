@@ -1,5 +1,7 @@
 package codediagramcreation.GeneralLanguageInfo;
 
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * This class is for generating a general language that most languages can fit into,
@@ -9,9 +11,9 @@ package codediagramcreation.GeneralLanguageInfo;
  * 
  * 
  * 
- * 
+ * <p>
  * CLASS
- * 
+ * </p>
  * 
  * 
  * <p>
@@ -42,31 +44,49 @@ package codediagramcreation.GeneralLanguageInfo;
  *  </pre></blockquote></p>
  */
 public class GeneralLanguage {
+    public static ArrayList<ArrayList<String>> classList = new ArrayList<>();
     
-    
+    /**
+     * 
+     * @param connections
+     * @param accessingDeclaration
+     * @param className
+     * @return
+     */
     public static String generateClass(String[] connections, String accessingDeclaration, String className){
 
-        String classString = "";
-        accesingDeclarations accessingDecEnum = accesingDeclarations.pub;
-
-
-        if (accessingDeclaration.equals("public")) {
-            accessingDecEnum = accesingDeclarations.pub;
-        } else if (accessingDeclaration.equals("private")) {
-            accessingDecEnum = accesingDeclarations.prv;
-        } else if (accessingDeclaration.equals("protected")) {
-            accessingDecEnum = accesingDeclarations.pro;
-        }
         
-        for (String string : connections) {
-            if (string != null) {
-                classString += string + " ";
+        
+        try {
+            String classString = "";
+            accesingDeclarations accessingDecEnum = accesingDeclarations.pub;
+    
+    
+            if (accessingDeclaration.equals("public")) {
+                accessingDecEnum = accesingDeclarations.pub;
+            } else if (accessingDeclaration.equals("private")) {
+                accessingDecEnum = accesingDeclarations.prv;
+            } else if (accessingDeclaration.equals("protected")) {
+                accessingDecEnum = accesingDeclarations.pro;
             }
+
+            for (String string : connections) {
+                if (string != null) {
+                    classString += string + " ";
+                }
+            }
+
+            classString += accessingDecEnum + " " + className;
+
+            addClass(classString);
+
+            return classString;
+        } catch (NullPointerException e) {
+           System.err.println("Null value for class");
         }
         
-        classString += accessingDecEnum + " " + className;
-
-        return classString;
+        return "";
+       
     }
 
     /**
@@ -127,6 +147,8 @@ public class GeneralLanguage {
 
         method += " " + isStatic;
 
+        addMethod(method);
+
         return method;
     }
 
@@ -170,8 +192,8 @@ public class GeneralLanguage {
                 accessingDecEnum = accesingDeclarations.pro;
             }
 
-            varOutput += accessingDecEnum.toString() + " ";
         }
+        varOutput += accessingDecEnum.toString() + " ";
 
         varOutput += varName;
 
@@ -183,7 +205,54 @@ public class GeneralLanguage {
             varOutput += " " + isStatic;
         }
         
+        addVarible(varOutput);
 
         return  varOutput;
+    }
+
+    private static void addClass(String classInfo){
+        classList.add(new ArrayList<String>());
+        classList.get(classList.size()-1).add(classInfo);
+    }
+
+    private static void addMethod(String methodInfo){
+        classList.get(classList.size()-1).add(methodInfo);
+    }
+
+    private static void addVarible(String VaribleInfo){
+        classList.get(classList.size()-1).add(VaribleInfo);
+    }
+
+
+    private static int line = 0; //The lines to represent folder depth, to prevent duplication var is out here
+    /**
+     * Displays a {@code ArrayList<Object>} and recursivly searches through each subsiquint {@code ArrayList}
+     * @param list the {@code ArrayList} to search.
+     * @see line a static intiger to keep track of the depth of the recursion.
+     */
+    public static void display(ArrayList<?> list){
+
+        for (int i = 0; i < list.size(); i++) { //starts scan through array list
+            if (i == 0 && list.get(0).getClass().equals(String.class)) { //check to see if object 0 is a string (unessicary, done for extra precution)
+                for (int j = 0; j < line; j++) {
+                    System.out.print("| ");
+                }
+                System.out.println("> " + (String)list.get(0));
+                line++;
+            } else if(list.get(i).getClass().equals(ArrayList.class)){ //checks to see if the object is a array list to start recurtion
+                
+                display((ArrayList<Object>)list.get(i));
+                line--;
+                for (int j = 0; j < line; j++) {
+                    System.out.print("| ");
+                }
+                System.out.println("- ");
+            } else if (list.get(i).getClass().equals(String.class)) { //checks to see if the object is a file to print
+                for (int j = 0; j < line; j++) {
+                    System.out.print("| ");
+                }
+                System.out.println(((String)list.get(i)));
+            }  
+        }
     }
 }

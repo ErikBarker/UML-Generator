@@ -80,7 +80,7 @@ public class directorySearch {
      * @param list the {@code ArrayList} to search.
      * @see line a static intiger to keep track of the depth of the recursion.
      */
-    private static void recursiveDisplay(ArrayList<Object> list){
+    public static void recursiveDisplay(ArrayList<?> list){
 
         for (int i = 0; i < list.size(); i++) { //starts scan through array list
             if (i == 0 && list.get(0).getClass().equals(String.class)) { //check to see if object 0 is a string (unessicary, done for extra precution)
