@@ -152,6 +152,10 @@ public class GeneralLanguage {
         return method;
     }
 
+    public static String generateVar(String[] accessingDeclaration, String varName, String varType){
+        return generateVar(accessingDeclaration, varName, varType, true);
+    }
+
     /**
      * Generates a Varable to the general language format for the diagram generator to understand
      * 
@@ -172,7 +176,7 @@ public class GeneralLanguage {
      * @param varType the type of varable being created, this is optional for non declaring languages
      * @return the varable in the general language format 
      */
-    public static String generateVar(String[] accessingDeclaration, String varName, String varType){
+    public static String generateVar(String[] accessingDeclaration, String varName, String varType, boolean full){
        
         boolean isStatic = false;
         String varOutput = "";
@@ -193,7 +197,9 @@ public class GeneralLanguage {
             }
 
         }
-        varOutput += accessingDecEnum.toString() + " ";
+        if (full) {
+            varOutput += accessingDecEnum.toString() + " ";
+        }
 
         varOutput += varName;
 
