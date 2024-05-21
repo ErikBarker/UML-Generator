@@ -34,14 +34,19 @@ public class javaScanner {
     }
 
 
-    
+    private static boolean isJavaClass(){
+        if (currentline.contains(" Class ") || currentline.contains(" class ") || currentline.contains(" Class{") || currentline.contains(" class{")) {
+            return true;
+        }
+        return false;
+    }
 
     private static void javaClass(){
         
         String[] accessingDeclaration = new String[2];
         String name = null;
         
-        if (currentline.contains(" Class ") || currentline.contains(" class ") || currentline.contains(" Class{") || currentline.contains(" class{")) {
+        if (isJavaClass()) {
             currentlinearray = currentline.split(" ");
 
             for (int i = 0; i < accessingDeclaration.length; i++) {
@@ -63,14 +68,44 @@ public class javaScanner {
         }
     }
 
+    public static boolean isJavaMethod(){
+        return false;
+    }
+
     private static void javaMethod() {
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'javaMethod'");
     }
+ 
 
     
     private static void javaVar() {
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'javaVar'");
+
+        String[] accessingDeclaration = new String[2];
+        String varname = null;
+        String varType = null;
+
+        if ((currentline.contains("public") || currentline.contains("private") || currentline.contains("protected")) && !(isJavaClass() || isJavaMethod())) {
+            currentlinearray = currentline.split(" ");
+
+            for (int i = 0; i < accessingDeclaration.length; i++) {
+                if (currentlinearray[i].equalsIgnoreCase("public") || currentlinearray[i].equalsIgnoreCase("private") || currentlinearray[i].equalsIgnoreCase("protected")) {
+                    accessingDeclaration[0] = currentlinearray[i];
+                } else if (currentlinearray[i].equals("static")) {
+                    accessingDeclaration[1] = currentlinearray[i];
+                }else if(varType == null){
+                    varType = currentlinearray[i];
+                }else{
+                    varname = currentlinearray[i];
+                }
+            }
+
+            //varname.replace(";", "");
+
+            System.out.println( GeneralLanguage.generateVar(accessingDeclaration, varname, varType));
+        }
     }
+
 }
