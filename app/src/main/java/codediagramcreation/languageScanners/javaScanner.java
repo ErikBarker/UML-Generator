@@ -77,7 +77,7 @@ public class javaScanner {
         //throw new UnsupportedOperationException("Unimplemented method 'javaMethod'");
     }
  
-
+    
     
     private static void javaVar() {
         // TODO Auto-generated method stub
@@ -91,7 +91,7 @@ public class javaScanner {
             currentline = currentline.trim();
             currentlinearray = currentline.split(" ");
 
-            for (int i = 0; i < accessingDeclaration.length; i++) {
+            for (int i = 0; i < currentlinearray.length; i++) {
                 if (currentlinearray[i].equalsIgnoreCase("public") || currentlinearray[i].equalsIgnoreCase("private") || currentlinearray[i].equalsIgnoreCase("protected")) {
                     accessingDeclaration[0] = currentlinearray[i];
                 } else if (currentlinearray[i].equals("static")) {
@@ -99,11 +99,11 @@ public class javaScanner {
                 }else if(varType == null){
                     varType = currentlinearray[i];
                 }else{
-                    varname = currentlinearray[i];
+                    varname = currentlinearray[i].replace(";", "");
                 }
             }
 
-            //varname.replace(";", "");
+            
 
             System.out.println( GeneralLanguage.generateVar(accessingDeclaration, varname, varType));
         }

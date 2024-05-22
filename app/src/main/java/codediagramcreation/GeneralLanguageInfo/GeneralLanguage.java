@@ -183,7 +183,7 @@ public class GeneralLanguage {
         accesingDeclarations accessingDecEnum = accesingDeclarations.pub;
 
         if (accessingDeclaration.length == 2) {
-            isStatic = true;
+            isStatic = Boolean.parseBoolean(accessingDeclaration[1]);
         }
 
         if (accessingDeclaration.length > 0) {  

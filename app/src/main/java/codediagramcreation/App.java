@@ -15,8 +15,13 @@ import codediagramcreation.languageScanners.Supported;
 import codediagramcreation.languageScanners.javaScanner;
 
 public class App {
-    
+    public int pub;
+    private boolean prv;
+    protected String pro;
+
     public String getGreeting() {
+        
+
         try {
             return "Welcome, Please choose a directory you would like to generate a diagram for: this program currently supports:" + supportedLanguages();
         } catch (ClassNotFoundException | IOException e) {
