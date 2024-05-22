@@ -88,6 +88,7 @@ public class javaScanner {
         String varType = null;
 
         if ((currentline.contains("public") || currentline.contains("private") || currentline.contains("protected")) && !(isJavaClass() || isJavaMethod())) {
+            currentline = currentline.trim();
             currentlinearray = currentline.split(" ");
 
             for (int i = 0; i < accessingDeclaration.length; i++) {
