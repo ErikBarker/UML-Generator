@@ -69,7 +69,23 @@ public class javaScanner {
     }
 
     public static boolean isJavaMethod(){
-        return false;
+
+        currentline = currentline.trim(); // Trim any leading or trailing whitespace
+
+            // Check if the line starts with public, private, protected, or static
+        if (currentline.startsWith("public") || currentline.startsWith("private") || currentline.startsWith("protected") || currentline.startsWith("static")) {
+        // Check if the line contains an opening parenthesis '(' and a closing parenthesis ')'
+        int openParenIndex = currentline.indexOf('(');
+        int closeParenIndex = currentline.lastIndexOf(')');
+        if (openParenIndex != -1 && closeParenIndex != -1 && openParenIndex < closeParenIndex) {
+            // Check if the line contains an opening curly brace '{'
+            int openBraceIndex = currentline.indexOf('{', closeParenIndex);
+            if (openBraceIndex != -1) {
+                return true; // Method signature detected
+            }
+        }
+    }
+    return false; // Not a method signature
     }
 
     private static void javaMethod() {
@@ -86,9 +102,9 @@ public class javaScanner {
         String[] accessingDeclaration = new String[2];
         String varname = null;
         String varType = null;
-
-        if ((currentline.contains("public") || currentline.contains("private") || currentline.contains("protected")) && !(isJavaClass() || isJavaMethod())) {
-            currentline = currentline.trim();
+        
+        currentline = currentline.trim();
+        if ((currentline.startsWith("public") || currentline.startsWith("private") || currentline.startsWith("protected")) && !(isJavaClass() || isJavaMethod() || isJavaInterface() || isJavaEnum())) {
             currentlinearray = currentline.split(" ");
 
             for (int i = 0; i < currentlinearray.length; i++) {
@@ -107,6 +123,28 @@ public class javaScanner {
 
             System.out.println( GeneralLanguage.generateVar(accessingDeclaration, varname, varType));
         }
+    }
+
+    private static boolean isJavaEnum(){
+        if (currentline.contains("enum")) {
+            return true;
+        }
+        return false;
+    }
+
+    private static void javaEnum(){
+
+    }
+
+    private static boolean isJavaInterface(){
+        if (currentline.contains("@interface")) {
+            return true;
+        }
+        return false;
+    }
+
+    private static void javaInterface(){
+
     }
 
 }

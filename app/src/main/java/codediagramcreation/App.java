@@ -104,9 +104,9 @@ public class App {
             }
         }
         
+        System.out.println(GeneralLanguage.generateClass(new String[]{"String"},"protected", "testclass") + "\n");
         System.out.println(GeneralLanguage.generateVar(new String[]{"public", "true"}, "testvar", "int"));
         System.out.println(GeneralLanguage.generateMethod(new String[]{"private", "true"}, "void", "testmethod", new String[]{GeneralLanguage.generateVar(new String[]{}, "time", "int", false), GeneralLanguage.generateVar(new String[]{}, "isOn", "bool", false)}));
-        System.out.println(GeneralLanguage.generateClass(new String[]{"String"},"protected", "testclass") + "\n");
 
         GeneralLanguage.display(GeneralLanguage.classList);
 
