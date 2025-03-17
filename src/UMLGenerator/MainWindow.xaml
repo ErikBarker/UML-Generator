@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UMLGenerator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <Grid>
-
+        <!-- Canvas for drawing UML elements -->
+        <Canvas Name="DrawingCanvas" Background="White" Margin="10"/>
+        
+        <!-- Button to add a UML class box -->
+        <Button Content="Add UML Class" Width="120" Height="30" HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="10" Click="AddClassBox_Click"/>
     </Grid>
 </Window>

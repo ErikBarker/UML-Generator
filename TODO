@@ -5,3 +5,8 @@ Setup basic UI
 - figure out how to display xml file
 - include features like saving, loading, editing, and other features
 - setup code scanning to work off a settings json file (file name schema: languageSettings/language.json)
+
+Referance
+https://wpf-tutorial.com
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/?view=netdesktop-9.0
+https://www.visual-paradigm.com/guide/
