@@ -8,7 +8,7 @@
             "name": ".NET Core Launch (WPF)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "dotnet: build",
             "program": "${workspaceFolder}/bin/Debug/net9.0-windows/UMLDiagramApp.dll",
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",

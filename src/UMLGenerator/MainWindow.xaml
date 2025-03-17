@@ -5,24 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UMLGenerator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="800"
+        WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
     
 
-    <Grid>
+    <DockPanel LastChildFill="True">
 
-    <ToolBarTray Background="White">
-        <ToolBar Band="1" BandIndex="1">
-            <Button Content="Test" Width="100" Height="50" HorizontalAlignment="Left"
-                VerticalAlignment="Top" Margin="10"> </Button>
+        <ToolBar DockPanel.Dock="Top" Padding="3" Background="LightGray">
+            <Button Content="Load File" Width="75" Click="AddClassBox_Click"/>
+
+            <Button Content="Save File" Width="75" Click="AddClassBox_Click"/>
+
+            <Button Content="Edit" Width="75" Click="AddClassBox_Click"/>
+
+            <Button Content="Generate" Width="75" Click="AddClassBox_Click"/>
+
+            <Button Content="Settings" Width="75" Click="AddClassBox_Click"/>
         </ToolBar>
-    </ToolBarTray>
 
         <!-- Canvas for drawing UML elements -->
-        <Canvas Name="DrawingCanvas" Background="White" Margin="10"/>
-        
-        <!-- Button to add a UML class box -->
-        <Button Content="Add UML Class" Width="120" Height="30" HorizontalAlignment="Right"
-                VerticalAlignment="Top" Margin="10" Click="AddClassBox_Click"/>
-    </Grid>
+        <Canvas Name="DrawingCanvas" Background="White"/>
+    
+    </DockPanel>
 </Window>

@@ -1,0 +1,38 @@
+{
+    "LanguageName" : "Testlanguage",
+    "LanguageVersion" : "0",
+    "Syntax" : {
+        "Class" : {
+            "ruleDescription":"A rule for a test Language class",
+            "structure":{
+                "modifyers":["pub", "prv", "pro", null],
+                "keyword":"class",
+                "extends":{
+                    "keyword":"extends"
+                }
+            }
+        },
+        "Method" : {
+            "ruleDescription":"A rule for a test Language Method",
+            "structure":{
+                "modifyers":["pub", "prv", "pro", null],
+                "return":["nothing", "returns"],
+                "keyword":"method",
+                "arguments":{
+                    "openingchar":"<",
+                    "seperatingChar":",",
+                    "endingchar":">"
+                }
+            }
+        },
+        "Variable" : {
+            "ruleDescription":"A rule for a test Language Method",
+            "structure":{
+                "modifyers":["pub", "prv", "pro", null],
+                "keyword":"variable"
+            }
+        },
+        "Enum" : {},
+        "Interface" : {}
+    }
+}
