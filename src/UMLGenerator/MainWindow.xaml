@@ -6,12 +6,23 @@
         xmlns:local="clr-namespace:UMLGenerator"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
+
+    
+
     <Grid>
+
+    <ToolBarTray Background="White">
+        <ToolBar Band="1" BandIndex="1">
+            <Button Content="Test" Width="100" Height="50" HorizontalAlignment="Left"
+                VerticalAlignment="Top" Margin="10"> </Button>
+        </ToolBar>
+    </ToolBarTray>
+
         <!-- Canvas for drawing UML elements -->
         <Canvas Name="DrawingCanvas" Background="White" Margin="10"/>
         
         <!-- Button to add a UML class box -->
-        <Button Content="Add UML Class" Width="120" Height="30" HorizontalAlignment="Left"
+        <Button Content="Add UML Class" Width="120" Height="30" HorizontalAlignment="Right"
                 VerticalAlignment="Top" Margin="10" Click="AddClassBox_Click"/>
     </Grid>
 </Window>
