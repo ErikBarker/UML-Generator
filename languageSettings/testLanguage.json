@@ -19,7 +19,8 @@
                 "return":["nothing", "returns"],
                 "returnTypeLocation":{
                     "incrimentAmountByWords":1,
-                    "incrimentAmountByCharater":null
+                    "incrimentAmountByCharater":null,
+                    "singleReturnType":true
                 },
                 "keyword":"method",
                 "arguments":{
