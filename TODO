@@ -1,0 +1,7 @@
+Setup basic UI
+- Reaserch wpf ui elements
+- Reaserch xml formating
+- figure out how to retain all the info for the diagrams
+- figure out how to display xml file
+- include features like saving, loading, editing, and other features
+- setup code scanning to work off a settings json file (file name schema: languageSettings/language.json)
