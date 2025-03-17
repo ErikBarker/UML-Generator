@@ -17,6 +17,10 @@
             "structure":{
                 "modifyers":["pub", "prv", "pro", null],
                 "return":["nothing", "returns"],
+                "returnTypeLocation":{
+                    "incrimentAmountByWords":1,
+                    "incrimentAmountByCharater":null
+                },
                 "keyword":"method",
                 "arguments":{
                     "openingchar":"<",
@@ -32,7 +36,9 @@
                 "keyword":"variable"
             }
         },
-        "Enum" : {},
-        "Interface" : {}
+        "Enum" : {
+
+        },
+        "Interface" : null
     }
 }
