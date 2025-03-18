@@ -21,6 +21,8 @@
 
             <Button Content="Generate" Width="75" Click="AddClassBox_Click"/>
 
+            <Button Content="Rules" Width="75" Click="RuleMenu_Click"/>
+
             <Button Content="Settings" Width="75" Click="AddClassBox_Click"/>
         </ToolBar>
 

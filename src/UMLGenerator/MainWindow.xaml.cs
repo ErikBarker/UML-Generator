@@ -54,4 +54,13 @@ public partial class MainWindow : Window
             // Add to the canvas
             DrawingCanvas.Children.Add(classContainer);
     }
+
+    public void RuleMenu_Click(object sender, RoutedEventArgs e){
+        Console.WriteLine("Createing Rule Window");
+
+        RuleWindow ruleWindow = new RuleWindow();
+
+        ruleWindow.Show();
+        ruleWindow.Activate();
+    }
 }
