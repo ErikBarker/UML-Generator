@@ -1,6 +1,7 @@
 {
     "LanguageName" : "Testlanguage",
     "LanguageVersion" : "0",
+    "FileExtention" : "0",
     "Syntax" : {
         "Class" : {
             "ruleDescription":"A rule for a test Language class",
@@ -31,7 +32,7 @@
             }
         },
         "Variable" : {
-            "ruleDescription":"A rule for a test Language Method",
+            "ruleDescription":"A rule for a test Language Var",
             "structure":{
                 "modifyers":["pub", "prv", "pro", null],
                 "keyword":"variable"
@@ -40,6 +41,8 @@
         "Enum" : {
 
         },
-        "Interface" : null
+        "Interface" : {
+
+        }
     }
 }

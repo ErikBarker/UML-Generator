@@ -12,14 +12,18 @@
     <Grid Name="MainRuleGrid">
 
 
-        <Button Content="New Rule" Width="300" Grid.Column="0" Grid.Row="0" Click="CreateNewRule_Click"/>
+        <Button Content="New Rule Set" Width="300" Grid.Column="0" Grid.Row="0" Click="CreateNewRule_Click"/>
 
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Name="RuleScrollBar" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
-            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
-                <Rectangle Fill="LightGray" Width="300" Height="500"></Rectangle>
+            <StackPanel Name="ButtonPanel" VerticalAlignment="Top" HorizontalAlignment="Left">
+                
             </StackPanel>
         </ScrollViewer>
 
+        <TextBlock Text="Rule Set Editor" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0"></TextBlock>
 
+        <Grid Name="RuleSetGrid" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2">
+
+        </Grid>
     </Grid>
 </Window>
