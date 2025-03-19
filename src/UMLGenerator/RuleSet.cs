@@ -41,6 +41,29 @@ namespace UMLGenerator
             }
         }
 
+        public String toJsonString(){
+
+            JsonSerializerOptions options = new JsonSerializerOptions{
+                    PropertyNameCaseInsensitive = true,
+                    ReadCommentHandling = JsonCommentHandling.Skip,
+                    AllowTrailingCommas = true,
+                    WriteIndented = true
+                };
+
+            return JsonSerializer.Serialize(this, options);
+        }
+
+        public void generateJsonfile(String dirPath){
+            String filePath = String.Join(Path.DirectorySeparatorChar, dirPath, String.Join("", LanguageName, "1.json"));
+
+            if(File.Exists(filePath)){
+                MessageBox.Show($"File already exist: {filePath}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            File.WriteAllText(filePath, toJsonString());
+        }
+
 
         public void DisplayRuleset()
         {

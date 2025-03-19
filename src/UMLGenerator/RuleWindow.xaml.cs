@@ -23,6 +23,9 @@ public partial class RuleWindow : Window
         "languageSettings"
     );
 
+    Button currentEditorButton = null;
+    Ruleset currentEditorRuleSet = null;
+
 
     public RuleWindow(){
 
@@ -64,6 +67,36 @@ public partial class RuleWindow : Window
 
     }
 
+    public void CreateNewRuleSet_Click(object sender, RoutedEventArgs e){
+        Ruleset ruleset = new Ruleset{
+            Syntax = new Dictionary<string, SyntaxRule>()
+        };
+
+        LoadRuleSetIntoEditor(ruleset);
+
+        updateRuleList();
+    }
+
+    public void DeleteRuleSet_Click(object sender, RoutedEventArgs e){
+        
+        ButtonPanel.Children.Remove(currentEditorButton);
+
+        File.Delete(currentEditorButton.Tag as String);
+
+        updateRuleList();
+    }
+
+    // Adjust saving feature to only replace necisary data if needed for porformance
+    public void SaveRuleSet_Click(object sender, RoutedEventArgs e){
+        
+        // if (File.Exists((String)currentEditorButton.Tag))
+        // {
+            
+        // }
+
+        currentEditorRuleSet.generateJsonfile((String)currentEditorButton.Tag);
+    }
+
     public void CreateNewRule_Click(object sender, RoutedEventArgs e){
 
     }
@@ -84,11 +117,43 @@ public partial class RuleWindow : Window
 
             CreateRuleButton(ruleName, filePath);
         }
+    }
 
+    public void updateRuleList(){
+        String[] filePaths = Directory.GetFiles(languageFolder);
 
+        foreach (String filePath in filePaths)
+        {
+            if (!System.IO.Path.GetExtension(filePath).ToLower().Equals(".json"))
+            {
+                continue;
+            }
+
+            String ruleName = System.IO.Path.GetFileName(filePath).Split(".")[0];
+
+            CreateRuleButton(ruleName, filePath);
+        }
+
+        foreach (Button button in ButtonPanel.Children)
+        {
+            if(File.Exists(button.Tag.ToString())){
+                continue;
+            }
+
+            ButtonPanel.Children.Remove(button);
+        }
     }
 
     public void CreateRuleButton(String btnTxt, String path){
+
+        foreach (Button button in ButtonPanel.Children)
+        {
+            if (button.Tag.ToString().Equals(path))
+            {
+                return;
+            }
+        }
+
         Button ruleButton = new Button{
             Content = btnTxt,
             Margin = new Thickness(5),
@@ -103,6 +168,8 @@ public partial class RuleWindow : Window
         if (sender is Button button && button.Tag is string filePath)
         {
             Console.WriteLine("Open " + button.Content);
+            currentEditorButton = button;
+            currentEditorRuleSet = Ruleset.loadRulesetFromFile(filePath);
             LoadJsonIntoEditor(filePath);
         }
     }
@@ -110,7 +177,59 @@ public partial class RuleWindow : Window
     public void LoadJsonIntoEditor(String filePath){
         Ruleset ruleset = Ruleset.loadRulesetFromFile(filePath);
 
-        ruleset.DisplayRuleset();
+        TextBlock language = new TextBlock{
+            Text = $"Language: {ruleset.LanguageName}",
+            TextAlignment = TextAlignment.Center
+        };
+
+        TextBlock version = new TextBlock{
+            Text = $"Version: {ruleset.LanguageVersion}",
+            TextAlignment = TextAlignment.Center
+        };
+
+
+        RuleSetPanel.Children.Add(language);
+        RuleSetPanel.Children.Add(version);
+
+        foreach (var rule in ruleset.Syntax){
+
+            //Add the Name of the rule
+            TextBlock ruleName = new TextBlock{
+                Text = rule.Key,
+                TextAlignment = TextAlignment.Center
+            };
+
+            RuleSetPanel.Children.Add(ruleName);
+
+            //Add the discription of the rule
+            RuleSetPanel.Children.Add(generateEditorGridElement("Description:", rule.Value.RuleDescription));
+
+            //Add all the values asociated with a structure
+            if (rule.Value.Structure != null)
+            {
+                RuleSetPanel.Children.Add(generateEditorGridElement("KeyWord:", rule.Value.Structure.Keyword));
+
+                if (rule.Value.Structure.Modifyers != null)
+                {
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Modifiers:", string.Join(", ", rule.Value.Structure.Modifyers)));
+                }
+
+                if (rule.Value.Structure.Extends != null)
+                {
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Extends:", rule.Value.Structure.Extends.Keyword));
+                }
+
+                if (rule.Value.Structure.Arguments != null)
+                {
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Arguments:", string.Join(", ", [rule.Value.Structure.Arguments.Openingchar, rule.Value.Structure.Arguments.SeperatingChar, rule.Value.Structure.Arguments.Endingchar])));
+                }
+            }
+
+        }
+    }
+
+    public void LoadRuleSetIntoEditor(Ruleset ruleSet){
+        Ruleset ruleset = ruleSet;
 
         TextBlock language = new TextBlock{
             Text = $"Language: {ruleset.LanguageName}",
