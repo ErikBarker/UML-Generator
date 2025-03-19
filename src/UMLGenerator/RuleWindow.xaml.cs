@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.VisualBasic;
 
 namespace UMLGenerator;
 
@@ -55,15 +56,11 @@ public partial class RuleWindow : Window
     }
 
     public void initEditor(){
-        ColumnDefinition colDef1 = new ColumnDefinition();
+        RuleSetPanel.Margin = new Thickness(10);
         
-        RuleSetGrid.ColumnDefinitions.Add(colDef1);
-        RuleSetGrid.RowDefinitions.Add(new RowDefinition());
-
         TextBlock tmpText = new TextBlock();
         tmpText.Text = "Select A RuleSet";
 
-        RuleSetGrid.Children.Add(tmpText);
 
     }
 
@@ -114,5 +111,82 @@ public partial class RuleWindow : Window
         Ruleset ruleset = Ruleset.loadRulesetFromFile(filePath);
 
         ruleset.DisplayRuleset();
+
+        TextBlock language = new TextBlock{
+            Text = $"Language: {ruleset.LanguageName}",
+            TextAlignment = TextAlignment.Center
+        };
+
+        TextBlock version = new TextBlock{
+            Text = $"Version: {ruleset.LanguageVersion}",
+            TextAlignment = TextAlignment.Center
+        };
+
+
+        RuleSetPanel.Children.Add(language);
+        RuleSetPanel.Children.Add(version);
+
+        foreach (var rule in ruleset.Syntax){
+
+            //Add the Name of the rule
+            TextBlock ruleName = new TextBlock{
+                Text = rule.Key,
+                TextAlignment = TextAlignment.Center
+            };
+
+            RuleSetPanel.Children.Add(ruleName);
+
+            //Add the discription of the rule
+            RuleSetPanel.Children.Add(generateEditorGridElement("Description:", rule.Value.RuleDescription));
+
+            //Add all the values asociated with a structure
+            if (rule.Value.Structure != null)
+            {
+                RuleSetPanel.Children.Add(generateEditorGridElement("KeyWord:", rule.Value.Structure.Keyword));
+
+                if (rule.Value.Structure.Modifyers != null)
+                {
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Modifiers:", string.Join(", ", rule.Value.Structure.Modifyers)));
+                }
+
+                if (rule.Value.Structure.Extends != null)
+                {
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Extends:", rule.Value.Structure.Extends.Keyword));
+                }
+
+                if (rule.Value.Structure.Arguments != null)
+                {
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Arguments:", string.Join(", ", [rule.Value.Structure.Arguments.Openingchar, rule.Value.Structure.Arguments.SeperatingChar, rule.Value.Structure.Arguments.Endingchar])));
+                }
+            }
+
+        }
+    }
+
+    public Grid generateEditorGridElement(String label, String text){
+            Grid ruleGridElement = new Grid{
+                Margin = new Thickness(5)
+            };
+
+            TextBlock ruleLabel = new TextBlock{
+                Text = label,
+                TextAlignment = TextAlignment.Center
+            };
+
+            TextBox ruleName = new TextBox{
+                Text = text,
+                TextAlignment = TextAlignment.Center
+            };
+
+            ruleGridElement.ColumnDefinitions.Add(new ColumnDefinition{Width = new GridLength(1, GridUnitType.Star)});
+            ruleGridElement.ColumnDefinitions.Add(new ColumnDefinition{Width = new GridLength(2, GridUnitType.Star)});
+
+            Grid.SetColumn(ruleLabel, 0);
+            Grid.SetColumn(ruleName, 1);
+
+            ruleGridElement.Children.Add(ruleLabel);
+            ruleGridElement.Children.Add(ruleName);
+
+        return ruleGridElement;
     }
 }

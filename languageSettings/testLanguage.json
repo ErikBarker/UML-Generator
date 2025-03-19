@@ -39,7 +39,16 @@
             }
         },
         "Enum" : {
-
+            "ruleDescription":"A rule for a test Language enum",
+            "structure":{
+                "modifyers":["pub", "prv", "pro", null],
+                "keyword":"enum",
+                "arguments":{
+                    "openingchar":"{",
+                    "seperatingChar":",",
+                    "endingchar":"}"
+                }
+            }
         },
         "Interface" : {
 

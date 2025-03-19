@@ -5,14 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UMLGenerator"
         mc:Ignorable="d"
-        Title="RuleWindow" Height="600" Width="800"
+        Title="Rule Window" Height="600" Width="800"
         WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
 
     <Grid Name="MainRuleGrid">
 
-
-        <Button Content="New Rule Set" Width="300" Grid.Column="0" Grid.Row="0" Click="CreateNewRule_Click"/>
+        <TextBlock Text="Languages" TextAlignment="Center" Grid.Column="0" Grid.Row="0"></TextBlock>
 
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Name="RuleScrollBar" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
             <StackPanel Name="ButtonPanel" VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -20,10 +19,33 @@
             </StackPanel>
         </ScrollViewer>
 
-        <TextBlock Text="Rule Set Editor" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0"></TextBlock>
+        <Grid Name="RuleSetEditorHeader" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <Grid Name="RuleSetGrid" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2">
+            <TextBlock Text="Rule Set Editor" TextAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"></TextBlock>
+
+            <Button Content="Add Rule" Grid.Column="0" Grid.Row="2"/>
+            <Button Content="Delete Rule" Grid.Column="1" Grid.Row="2"/>
+            <Button Content="Tmp" Grid.Column="2" Grid.Row="2"/>
+            <Button Content="New Rule Set" Grid.Column="0" Grid.Row="1" Click="CreateNewRule_Click"/>
+            <Button Content="Save RuleSet" Grid.Column="1" Grid.Row="1"/>
+            <Button Content="Delete RuleSet" Grid.Column="2" Grid.Row="1"/>
 
         </Grid>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" Name="RuleSetScrollBar" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2">
+            <StackPanel Name="RuleSetPanel">
+
+            </StackPanel>
+        </ScrollViewer>       
     </Grid>
 </Window>
