@@ -1,0 +1,29 @@
+<Window x:Class="UMLGenerator.RuleCreationPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UMLGenerator"
+        mc:Ignorable="d"
+        Title="RuleSet Creation" Height="300" Width="400"
+        WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Rule Type:" Grid.Column="0" Grid.Row="0"/>
+        <ComboBox Name="ruleSelection" Grid.Column="1" Grid.Row="0"/>
+
+        <Button Content="Save" Grid.Column="0" Grid.Row="1" Click="SaveButton_Click"/>
+        <Button Content="Cancel" Grid.Column="1" Grid.Row="1" Click="CancelButton_Click"/>
+    </Grid>
+
+</Window>

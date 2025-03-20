@@ -111,7 +111,17 @@ public partial class RuleWindow : Window
     }
 
     public void CreateNewRule_Click(object sender, RoutedEventArgs e){
+        RuleCreationPopup ruleCreationPopup = new RuleCreationPopup();
+        ruleCreationPopup.ruleset = currentEditorRuleSet;
+        bool? result = ruleCreationPopup.ShowDialog();
 
+        if (!result.Value || !result.Equals(null))
+        {
+            return;
+        }
+        currentEditorRuleSet.Syntax.Add(ruleCreationPopup.ruleSelected, new SyntaxRule{
+            Structure = new Structure{}
+        });
     }
 
     public void DeleteRule_Click(Object sender, RoutedEventArgs e){
