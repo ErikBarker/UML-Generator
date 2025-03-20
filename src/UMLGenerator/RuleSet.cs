@@ -54,7 +54,7 @@ namespace UMLGenerator
         }
 
         public void generateJsonfile(String dirPath){
-            String filePath = String.Join(Path.DirectorySeparatorChar, dirPath, String.Join("", LanguageName, "1.json"));
+            String filePath = String.Join(Path.DirectorySeparatorChar, dirPath);
 
             if(File.Exists(filePath)){
                 MessageBox.Show($"File already exist: {filePath}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);

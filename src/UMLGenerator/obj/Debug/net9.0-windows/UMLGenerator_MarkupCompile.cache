@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\App.xaml
-21572206363
+32120528189
 
-6168339764
+72012782126
 201668129756
-MainWindow.xaml;RuleWindow.xaml;
+MainWindow.xaml;RuleWindow.xaml;RuleWindowCreationPopup.xaml;
 
 False
 

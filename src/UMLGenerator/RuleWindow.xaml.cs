@@ -2,8 +2,10 @@ using System.Collections;
 using System.Data;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -11,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.VisualBasic;
 
 namespace UMLGenerator;
 
@@ -25,6 +26,8 @@ public partial class RuleWindow : Window
 
     Button currentEditorButton = null;
     Ruleset currentEditorRuleSet = null;
+
+    private TextBox focusedTextBox = null;
 
 
     public RuleWindow(){
@@ -68,8 +71,18 @@ public partial class RuleWindow : Window
     }
 
     public void CreateNewRuleSet_Click(object sender, RoutedEventArgs e){
+        RuleWindowCreationPopup ruleWindowCreationPopup = new RuleWindowCreationPopup();
+        bool? result = ruleWindowCreationPopup.ShowDialog();
+
+        if (!ruleWindowCreationPopup.save)
+        {
+            return;
+        }
+        
         Ruleset ruleset = new Ruleset{
-            Syntax = new Dictionary<string, SyntaxRule>()
+            Syntax = new Dictionary<string, SyntaxRule>(),
+            LanguageName = ruleWindowCreationPopup.LanguageName,
+            LanguageVersion = ruleWindowCreationPopup.Version
         };
 
         LoadRuleSetIntoEditor(ruleset);
@@ -99,6 +112,59 @@ public partial class RuleWindow : Window
 
     public void CreateNewRule_Click(object sender, RoutedEventArgs e){
 
+    }
+
+    public void DeleteRule_Click(Object sender, RoutedEventArgs e){
+        if (focusedTextBox==null){
+            MessageBox.Show("No rule selected to delete.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        Grid parentGrid = focusedTextBox.Parent as Grid;
+        if (parentGrid == null){
+            return;
+        }
+
+        // Find the index of the parent grid in the RuleSetPanel
+        int gridIndex = RuleSetPanel.Children.IndexOf(parentGrid);
+        if (gridIndex == -1) return;
+    
+        // Traverse backward to find the TextBlock with the rule name
+        TextBlock ruleNameBlock = null;
+        for (int i = gridIndex - 1; i >= 0; i--)
+        {
+            if (RuleSetPanel.Children[i] is TextBlock tb)
+            {
+                ruleNameBlock = tb;
+                break;
+            }
+        }
+    
+        if (ruleNameBlock == null)
+        {
+            MessageBox.Show("No rule name found.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+    
+        string ruleName = ruleNameBlock.Text;
+    
+        // Remove the rule from the ruleset
+        if (currentEditorRuleSet.Syntax.ContainsKey(ruleName))
+        {
+            currentEditorRuleSet.Syntax.Remove(ruleName);
+    
+            // Save the updated ruleset
+            currentEditorRuleSet.generateJsonfile((string)currentEditorButton.Tag);
+    
+            // Reload the rules into the editor
+            LoadRuleSetIntoEditor(currentEditorRuleSet);
+    
+            MessageBox.Show($"Rule '{ruleName}' deleted successfully.", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        else
+        {
+            MessageBox.Show($"Rule '{ruleName}' not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
     }
 
     public void LoadCurrentRules(){
@@ -175,6 +241,9 @@ public partial class RuleWindow : Window
     }
 
     public void LoadJsonIntoEditor(String filePath){
+
+        RuleSetPanel.Children.Clear();
+
         Ruleset ruleset = Ruleset.loadRulesetFromFile(filePath);
 
         TextBlock language = new TextBlock{
@@ -229,6 +298,8 @@ public partial class RuleWindow : Window
     }
 
     public void LoadRuleSetIntoEditor(Ruleset ruleSet){
+        
+        RuleSetPanel.Children.Clear();
         Ruleset ruleset = ruleSet;
 
         TextBlock language = new TextBlock{
@@ -296,6 +367,8 @@ public partial class RuleWindow : Window
                 Text = text,
                 TextAlignment = TextAlignment.Center
             };
+
+            ruleName.GotFocus += (sender, e) => focusedTextBox = sender as TextBox;
 
             ruleGridElement.ColumnDefinitions.Add(new ColumnDefinition{Width = new GridLength(1, GridUnitType.Star)});
             ruleGridElement.ColumnDefinitions.Add(new ColumnDefinition{Width = new GridLength(2, GridUnitType.Star)});
