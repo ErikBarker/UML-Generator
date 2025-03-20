@@ -71,7 +71,7 @@ public partial class RuleWindow : Window
     }
 
     public void CreateNewRuleSet_Click(object sender, RoutedEventArgs e){
-        RuleWindowCreationPopup ruleWindowCreationPopup = new RuleWindowCreationPopup();
+        RuleSetWindowCreationPopup ruleWindowCreationPopup = new RuleSetWindowCreationPopup();
         bool? result = ruleWindowCreationPopup.ShowDialog();
 
         if (!ruleWindowCreationPopup.save)

@@ -1,14 +1,14 @@
 using System.Windows;
 
 namespace UMLGenerator;
-public partial class RuleWindowCreationPopup : Window
+public partial class RuleSetWindowCreationPopup : Window
 {
     public String LanguageName;
     public String Version;
 
     public bool save = false;
 
-    public RuleWindowCreationPopup(){
+    public RuleSetWindowCreationPopup(){
 
         InitializeComponent();
 
