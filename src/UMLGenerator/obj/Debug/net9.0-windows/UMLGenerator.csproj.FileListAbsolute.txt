@@ -25,3 +25,5 @@ C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\Rules\RuleCreationPopup.baml
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\Rules\RuleSetWindowCreationPopup.baml
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\Rules\RuleWindow.baml
+C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\UMLVisuals\UMLBox.baml
+C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\UMLVisuals\UMLBox.g.cs

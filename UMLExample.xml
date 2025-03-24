@@ -1,0 +1,28 @@
+<UMLDiagram gridSize="10" snappingDefalt="true">
+    <Class id="0">
+        <Title abstract="false">Person</Title>
+        <Attribute static="false">-Name: string</Attribute>
+        <Attribute static="false">-Age: int</Attribute>
+        <Method static="false">#GetAge(): int</Method>
+        <Position X="150" Y="100"/>
+    </Class>
+
+    <Class id="1">
+        <Title abstract="false">Student</Title>
+        <Attribute static="false">-GPA: float</Attribute>
+        <Method static="false">+GetGPA(): float</Method>
+        <Position X="100" Y="300"/>
+    </Class>
+
+    <Class id="2">
+        <Title abstract="false">Teacher</Title>
+        <Attribute static="false">-Salory: float</Attribute>
+        <Method static="false">+GetSalory(): float</Method>
+        <Position X="200" Y="300" />
+    </Class>
+
+
+    <Connection in="1" out="0" style="solid"></Connection>
+    <Connection in="2" out="0" style="solid"></Connection>
+
+</UMLDiagram>

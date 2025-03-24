@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UMLDiagram;
 
 namespace UMLGenerator;
 
@@ -16,40 +17,21 @@ namespace UMLGenerator;
 /// </summary>
 public partial class MainWindow : Window
 {
+    public static double GridSize = 10;
+
     public MainWindow()
     {
         InitializeComponent();
     }
 
     public void AddClassBox_Click(object sender, RoutedEventArgs e){
-        // Create a UML class box (Rectangle)
-            Rectangle classBox = new Rectangle
-            {
-                Width = 150,
-                Height = 80,
-                Stroke = Brushes.Black,
-                Fill = Brushes.LightGray,
-                StrokeThickness = 2
-            };
+        UMLBox box = new UMLBox();
+            
+        // Set initial position
+        Canvas.SetLeft(box, 50);
+        Canvas.SetTop(box, 50);
 
-            // Create a label for the class name
-            TextBlock className = new TextBlock
-            {
-                Text = "NewClass",
-                FontSize = 14,
-                FontWeight = FontWeights.Bold,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-
-            // Create a container (Grid) to hold both
-            Grid classContainer = new Grid();
-            classContainer.Children.Add(classBox);
-            classContainer.Children.Add(className);
-
-            // Position the class box
-            Canvas.SetLeft(classContainer, 100);
-            Canvas.SetTop(classContainer, 100);
+        UmlCanvas.Children.Add(box);
 
     }
 
