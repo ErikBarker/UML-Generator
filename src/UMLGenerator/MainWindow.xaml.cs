@@ -51,8 +51,6 @@ public partial class MainWindow : Window
             Canvas.SetLeft(classContainer, 100);
             Canvas.SetTop(classContainer, 100);
 
-            // Add to the canvas
-            DrawingCanvas.Children.Add(classContainer);
     }
 
     public void RuleMenu_Click(object sender, RoutedEventArgs e){

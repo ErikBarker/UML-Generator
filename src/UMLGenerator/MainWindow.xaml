@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UMLGenerator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800"
+        Title="UML Generator" Height="600" Width="800"
         WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
     
@@ -26,8 +26,21 @@
             <Button Content="Settings" Width="75" Click="AddClassBox_Click"/>
         </ToolBar>
 
-        <!-- Canvas for drawing UML elements -->
-        <Canvas Name="DrawingCanvas" Background="White"/>
+        <Grid>
+            <!-- Background Grid -->
+            <Grid Name="GridBackground">
+                <Grid.Background>
+                    <VisualBrush TileMode="Tile" Viewport="0,0,10,10" ViewportUnits="Absolute">
+                        <VisualBrush.Visual>
+                            <Rectangle Width="50" Height="50" Stroke="LightGray" Fill="Transparent" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Grid.Background>
+            </Grid>
+
+            <!-- Canvas for UML Boxes -->
+            <Canvas Name="UmlCanvas" Background="Transparent" ClipToBounds="True"/>
+        </Grid>
     
     </DockPanel>
 </Window>
