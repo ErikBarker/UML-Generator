@@ -63,6 +63,12 @@ namespace UMLDiagram{
 
     class UMLData
     {
-        
+        int id;
+        float width;
+        float height;
+        Point pos;
+
     }
+
+
 }
