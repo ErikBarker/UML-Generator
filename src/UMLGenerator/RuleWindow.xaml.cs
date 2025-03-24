@@ -101,11 +101,101 @@ public partial class RuleWindow : Window
 
     // Adjust saving feature to only replace necisary data if needed for porformance
 
-    //TODO update this method to save the data edited in the ui
     public void SaveRuleSet_Click(object sender, RoutedEventArgs e){
 
+        SaveRules();
         currentEditorRuleSet.generateJsonfile((String)currentEditorButton.Tag);
         LoadRuleSetIntoEditor(currentEditorRuleSet);
+    }
+
+    public void SaveRules()
+    {
+        foreach (var ruleArea in RuleSetPanel.Children)
+        {
+            if (ruleArea is Grid grid)
+            {
+                string mainKey = null;  // Store the main key (from Tag)
+                string subKey = null;   // Store the subkey (from associated TextBlock)
+                string value = null;    // Store the TextBox value
+
+                foreach (var child in grid.Children)
+                {
+                    // Identify TextBlock and TextBox pairs
+                    if (child is TextBlock textBlock)
+                    {
+                        subKey = textBlock.Text;  // Use the TextBlock as the subkey
+                    }
+                    else if (child is TextBox textBox)
+                    {
+                        mainKey = textBox.Tag?.ToString();   // Get main key from TextBox Tag
+                        value = textBox.Text;                // Get value from TextBox
+
+                        // Ensure keys are valid before assigning
+                        if (!string.IsNullOrEmpty(mainKey))
+                        {
+                            if (currentEditorRuleSet.Syntax.ContainsKey(mainKey))
+                            {
+                                var rule = currentEditorRuleSet.Syntax[mainKey];
+
+                                // Store subKey and value if valid
+                                if (!string.IsNullOrEmpty(subKey))
+                                {
+                                    // Add dynamic properties to store subkeys and their values
+                                    if (rule.Structure == null)
+                                    {
+                                        rule.Structure = new Structure();
+                                    }
+
+                                    // Handle subkey-value pairs
+                                    switch (subKey.ToLower().Replace(":", ""))
+                                    {
+                                        case "description":
+                                            rule.RuleDescription = value;
+                                            break;
+
+                                        case "keyword":
+                                            rule.Structure.Keyword = value;
+                                            break;
+                                        case "modifiers":
+                                            rule.Structure.Modifyers = new List<string>(value.Split(", "));
+                                            break;
+                                        case "extends":
+                                            if (rule.Structure.Extends == null)
+                                            {
+                                                rule.Structure.Extends = new Extends();
+                                            }
+                                            rule.Structure.Extends.Keyword = value;
+                                            break;
+                                        case "arguments":
+                                            if (rule.Structure.Arguments == null)
+                                            {
+                                                rule.Structure.Arguments = new Arguments();
+                                            }
+                                            rule.Structure.Arguments.Openingchar = value.Split(", ")[0];
+                                            rule.Structure.Arguments.SeperatingChar = value.Split(", ")[1];
+                                            rule.Structure.Arguments.Endingchar = value.Split(", ")[2];
+                                            break;
+                                        default:
+                                            // Handle unknown subkeys by storing them as custom values
+                                            MessageBox.Show($"Unknown subkey: {subKey}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    // If no subkey, just store the value directly
+                                    rule.RuleDescription = value;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Unknown main key: {mainKey}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void CreateNewRule_Click(object sender, RoutedEventArgs e){
@@ -287,26 +377,26 @@ public partial class RuleWindow : Window
             RuleSetPanel.Children.Add(ruleName);
 
             //Add the discription of the rule
-            RuleSetPanel.Children.Add(generateEditorGridElement("Description:", rule.Value.RuleDescription));
+            RuleSetPanel.Children.Add(generateEditorGridElement("Description:", rule.Value.RuleDescription, rule.Key));
 
             //Add all the values asociated with a structure
             if (rule.Value.Structure != null)
             {
-                RuleSetPanel.Children.Add(generateEditorGridElement("KeyWord:", rule.Value.Structure.Keyword));
+                RuleSetPanel.Children.Add(generateEditorGridElement("KeyWord:", rule.Value.Structure.Keyword, rule.Key));
 
                 if (rule.Value.Structure.Modifyers != null)
                 {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Modifiers:", string.Join(", ", rule.Value.Structure.Modifyers)));
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Modifiers:", string.Join(", ", rule.Value.Structure.Modifyers), rule.Key));
                 }
 
                 if (rule.Value.Structure.Extends != null)
                 {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Extends:", rule.Value.Structure.Extends.Keyword));
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Extends:", rule.Value.Structure.Extends.Keyword, rule.Key));
                 }
 
                 if (rule.Value.Structure.Arguments != null)
                 {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Arguments:", string.Join(", ", [rule.Value.Structure.Arguments.Openingchar, rule.Value.Structure.Arguments.SeperatingChar, rule.Value.Structure.Arguments.Endingchar])));
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Arguments:", string.Join(", ", [rule.Value.Structure.Arguments.Openingchar, rule.Value.Structure.Arguments.SeperatingChar, rule.Value.Structure.Arguments.Endingchar]), rule.Key));
                 }
             }
 
@@ -343,33 +433,33 @@ public partial class RuleWindow : Window
             RuleSetPanel.Children.Add(ruleName);
 
             //Add the discription of the rule
-            RuleSetPanel.Children.Add(generateEditorGridElement("Description:", rule.Value.RuleDescription));
+            RuleSetPanel.Children.Add(generateEditorGridElement("Description:", rule.Value.RuleDescription, rule.Key));
 
             //Add all the values asociated with a structure
             if (rule.Value.Structure != null)
             {
-                RuleSetPanel.Children.Add(generateEditorGridElement("KeyWord:", rule.Value.Structure.Keyword));
+                RuleSetPanel.Children.Add(generateEditorGridElement("KeyWord:", rule.Value.Structure.Keyword, rule.Key));
 
                 if (rule.Value.Structure.Modifyers != null)
                 {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Modifiers:", string.Join(", ", rule.Value.Structure.Modifyers)));
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Modifiers:", string.Join(", ", rule.Value.Structure.Modifyers), rule.Key));
                 }
 
                 if (rule.Value.Structure.Extends != null)
                 {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Extends:", rule.Value.Structure.Extends.Keyword));
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Extends:", rule.Value.Structure.Extends.Keyword, rule.Key));
                 }
 
                 if (rule.Value.Structure.Arguments != null)
                 {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Arguments:", string.Join(", ", [rule.Value.Structure.Arguments.Openingchar, rule.Value.Structure.Arguments.SeperatingChar, rule.Value.Structure.Arguments.Endingchar])));
+                    RuleSetPanel.Children.Add(generateEditorGridElement("Arguments:", string.Join(", ", [rule.Value.Structure.Arguments.Openingchar, rule.Value.Structure.Arguments.SeperatingChar, rule.Value.Structure.Arguments.Endingchar]), rule.Key));
                 }
             }
 
         }
     }
 
-    public Grid generateEditorGridElement(String label, String text){
+    public Grid generateEditorGridElement(String label, String text, String rule){
             Grid ruleGridElement = new Grid{
                 Margin = new Thickness(5)
             };
@@ -381,7 +471,8 @@ public partial class RuleWindow : Window
 
             TextBox ruleName = new TextBox{
                 Text = text,
-                TextAlignment = TextAlignment.Center
+                TextAlignment = TextAlignment.Center,
+                Tag = rule
             };
 
             ruleName.GotFocus += (sender, e) => focusedTextBox = sender as TextBox;

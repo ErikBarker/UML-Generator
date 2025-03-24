@@ -1,3 +1,8 @@
+C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.exe
+C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.deps.json
+C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.runtimeconfig.json
+C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.dll
+C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.pdb
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\MainWindow.g.cs
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\RuleCreationPopup.g.cs
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\RuleSetWindowCreationPopup.g.cs
@@ -5,11 +10,6 @@ C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\App.g.cs
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\UMLGenerator_MarkupCompile.cache
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\UMLGenerator_MarkupCompile.lref
-C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.exe
-C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.deps.json
-C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.runtimeconfig.json
-C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.dll
-C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\bin\Debug\net9.0-windows\UMLGenerator.pdb
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\MainWindow.baml
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\RuleCreationPopup.baml
 C:\Users\erikb\Documents\GitHub\UML-Generator\src\UMLGenerator\obj\Debug\net9.0-windows\RuleSetWindowCreationPopup.baml
