@@ -85,8 +85,8 @@ public partial class RuleWindow : Window
             LanguageVersion = ruleWindowCreationPopup.Version
         };
 
+        ruleset.generateJsonfile(String.Join(System.IO.Path.DirectorySeparatorChar , languageFolder, String.Join("", ruleset.LanguageName, ruleset.LanguageVersion, ".json")).ToLower());
         LoadRuleSetIntoEditor(ruleset);
-
         updateRuleList();
     }
 
@@ -100,28 +100,33 @@ public partial class RuleWindow : Window
     }
 
     // Adjust saving feature to only replace necisary data if needed for porformance
+
+    //TODO update this method to save the data edited in the ui
     public void SaveRuleSet_Click(object sender, RoutedEventArgs e){
-        
-        // if (File.Exists((String)currentEditorButton.Tag))
-        // {
-            
-        // }
 
         currentEditorRuleSet.generateJsonfile((String)currentEditorButton.Tag);
+        LoadRuleSetIntoEditor(currentEditorRuleSet);
     }
 
     public void CreateNewRule_Click(object sender, RoutedEventArgs e){
-        RuleCreationPopup ruleCreationPopup = new RuleCreationPopup();
-        ruleCreationPopup.ruleset = currentEditorRuleSet;
+        RuleCreationPopup ruleCreationPopup = new RuleCreationPopup(currentEditorRuleSet);
         bool? result = ruleCreationPopup.ShowDialog();
 
-        if (!result.Value || !result.Equals(null))
+        if (!result.Value)
         {
             return;
         }
         currentEditorRuleSet.Syntax.Add(ruleCreationPopup.ruleSelected, new SyntaxRule{
-            Structure = new Structure{}
+            Structure = new Structure{
+                Modifyers = new List<string>(),
+                Extends = new Extends(),
+                ReturnTypeLocation = new ReturnTypeLocation(),
+                Arguments = new Arguments()
+            }
         });
+
+        Console.WriteLine("Added new rule");
+        LoadRuleSetIntoEditor(currentEditorRuleSet);
     }
 
     public void DeleteRule_Click(Object sender, RoutedEventArgs e){
@@ -170,6 +175,7 @@ public partial class RuleWindow : Window
             LoadRuleSetIntoEditor(currentEditorRuleSet);
     
             MessageBox.Show($"Rule '{ruleName}' deleted successfully.", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
+            LoadRuleSetIntoEditor(currentEditorRuleSet);
         }
         else
         {

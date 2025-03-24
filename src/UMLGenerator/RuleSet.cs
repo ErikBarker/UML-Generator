@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -12,6 +13,8 @@ namespace UMLGenerator
         public string LanguageVersion { get; set; }
         public string FileExtention { get; set; }
         public Dictionary<string, SyntaxRule> Syntax { get; set; }
+
+        public static ArrayList ValidSyntaxNames = ["Class", "Variable", "Method", "Enum", "Interface"];
 
 
         public static Ruleset loadRulesetFromFile(String filePath){
@@ -57,8 +60,14 @@ namespace UMLGenerator
             String filePath = String.Join(Path.DirectorySeparatorChar, dirPath);
 
             if(File.Exists(filePath)){
-                MessageBox.Show($"File already exist: {filePath}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                MessageBoxResult saveResult = MessageBox.Show($"File already exist: {filePath}\n Would you like to update the file", "Error", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if(saveResult == MessageBoxResult.No){
+                    MessageBox.Show("The RuleSet will not be saved", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                } else{
+                    File.Delete(filePath);
+                }
             }
 
             File.WriteAllText(filePath, toJsonString());
