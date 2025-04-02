@@ -7,8 +7,8 @@ using UMLGenerator;
 
 public class Connection
 {
-    private LinkedList<Ellipse> pointhitBoxes = new LinkedList<Ellipse>();//TODO impliment
     private LinkedList<Point> points = new LinkedList<Point>();
+    private LinkedList<Ellipse> pointhitBoxes = new LinkedList<Ellipse>();//TODO impliment
     private LinkedList<Line> lines = new LinkedList<Line>();
     private LinkedList<Line> linehitBoxes = new LinkedList<Line>();
 
@@ -20,7 +20,6 @@ public class Connection
 
     private bool hovered = false;
     private bool draggingPoint = false;
-    private Line previewLine = null;
 
     
 
@@ -41,6 +40,10 @@ public class Connection
 
     public void addPoint(Point point){
         points.AddBefore(points.Last, point);
+    }
+
+    public void removePoint(Point point){
+        points.Remove(point);
     }
 
     public void setHead(Point point){
@@ -126,7 +129,8 @@ public class Connection
 
             hitbox.MouseEnter += OnMouseEnter;
             hitbox.MouseLeave += OnMouseLeave;
-            hitbox.MouseLeftButtonDown += OnMouseDown;
+            hitbox.MouseLeftButtonDown += OnMouseDownLeft;
+            hitbox.MouseRightButtonDown += OnMouseDownRight;
 
             Panel.SetZIndex(line, -3);
             Panel.SetZIndex(hitbox, -2);
@@ -137,7 +141,7 @@ public class Connection
         }
     }
 
-    private void OnMouseDown(object sender, MouseButtonEventArgs e){
+    private void OnMouseDownLeft(object sender, MouseButtonEventArgs e){
         if (hovered)
         {
             Canvas parent = ((Line)sender).Parent as Canvas;
@@ -171,6 +175,10 @@ public class Connection
                 }
             }
         }
+    }
+
+    private void OnMouseDownRight (object sender, MouseButtonEventArgs e){
+        
     }
 
     private void OnMouseEnter(object sender, MouseEventArgs e){
