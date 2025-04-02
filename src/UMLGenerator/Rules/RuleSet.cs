@@ -9,6 +9,7 @@ namespace UMLGenerator
 {
     public class Ruleset
     {
+        public static Dictionary<string, Ruleset> fileExtentionPairs;
         public string LanguageName { get; set; }
         public string LanguageVersion { get; set; }
         public string FileExtention { get; set; }
@@ -34,6 +35,7 @@ namespace UMLGenerator
                 };
 
                 Ruleset ruleset = JsonSerializer.Deserialize<Ruleset>(jsonContent, options);
+                fileExtentionPairs.Add(ruleset.FileExtention, ruleset   );
                 return ruleset;
                 
             }
