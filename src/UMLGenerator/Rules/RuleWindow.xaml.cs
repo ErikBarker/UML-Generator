@@ -80,12 +80,12 @@ public partial class RuleWindow : Window
         }
         
         Ruleset ruleset = new Ruleset{
-            Syntax = new Dictionary<string, SyntaxRule>(),
-            LanguageName = ruleWindowCreationPopup.LanguageName,
-            LanguageVersion = ruleWindowCreationPopup.Version
+            constructRules = new Dictionary<string, ConstructRule>(),
+            language = ruleWindowCreationPopup.LanguageName,
+            version = ruleWindowCreationPopup.Version
         };
 
-        ruleset.generateJsonfile(String.Join(System.IO.Path.DirectorySeparatorChar , languageFolder, String.Join("", ruleset.LanguageName, ruleset.LanguageVersion, ".json")).ToLower());
+        ruleset.generateJsonfile(String.Join(System.IO.Path.DirectorySeparatorChar , languageFolder, String.Join("", ruleset.language, ruleset.version, ".json")).ToLower());
         LoadRuleSetIntoEditor(ruleset);
         updateRuleList();
     }
@@ -110,92 +110,7 @@ public partial class RuleWindow : Window
 
     public void SaveRules()
     {
-        foreach (var ruleArea in RuleSetPanel.Children)
-        {
-            if (ruleArea is Grid grid)
-            {
-                string mainKey = null;  // Store the main key (from Tag)
-                string subKey = null;   // Store the subkey (from associated TextBlock)
-                string value = null;    // Store the TextBox value
-
-                foreach (var child in grid.Children)
-                {
-                    // Identify TextBlock and TextBox pairs
-                    if (child is TextBlock textBlock)
-                    {
-                        subKey = textBlock.Text;  // Use the TextBlock as the subkey
-                    }
-                    else if (child is TextBox textBox)
-                    {
-                        mainKey = textBox.Tag?.ToString();   // Get main key from TextBox Tag
-                        value = textBox.Text;                // Get value from TextBox
-
-                        // Ensure keys are valid before assigning
-                        if (!string.IsNullOrEmpty(mainKey))
-                        {
-                            if (currentEditorRuleSet.Syntax.ContainsKey(mainKey))
-                            {
-                                var rule = currentEditorRuleSet.Syntax[mainKey];
-
-                                // Store subKey and value if valid
-                                if (!string.IsNullOrEmpty(subKey))
-                                {
-                                    // Add dynamic properties to store subkeys and their values
-                                    if (rule.Structure == null)
-                                    {
-                                        rule.Structure = new Structure();
-                                    }
-
-                                    // Handle subkey-value pairs
-                                    switch (subKey.ToLower().Replace(":", ""))
-                                    {
-                                        case "description":
-                                            rule.RuleDescription = value;
-                                            break;
-
-                                        case "keyword":
-                                            rule.Structure.Keyword = value;
-                                            break;
-                                        case "modifiers":
-                                            rule.Structure.Modifyers = new List<string>(value.Split(", "));
-                                            break;
-                                        case "extends":
-                                            if (rule.Structure.Extends == null)
-                                            {
-                                                rule.Structure.Extends = new Extends();
-                                            }
-                                            rule.Structure.Extends.Keyword = value;
-                                            break;
-                                        case "arguments":
-                                            if (rule.Structure.Arguments == null)
-                                            {
-                                                rule.Structure.Arguments = new Arguments();
-                                            }
-                                            rule.Structure.Arguments.Openingchar = value.Split(", ")[0];
-                                            rule.Structure.Arguments.SeperatingChar = value.Split(", ")[1];
-                                            rule.Structure.Arguments.Endingchar = value.Split(", ")[2];
-                                            break;
-                                        default:
-                                            // Handle unknown subkeys by storing them as custom values
-                                            MessageBox.Show($"Unknown subkey: {subKey}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    // If no subkey, just store the value directly
-                                    rule.RuleDescription = value;
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show($"Unknown main key: {mainKey}", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        
     }
 
     public void CreateNewRule_Click(object sender, RoutedEventArgs e){
@@ -206,14 +121,7 @@ public partial class RuleWindow : Window
         {
             return;
         }
-        currentEditorRuleSet.Syntax.Add(ruleCreationPopup.ruleSelected, new SyntaxRule{
-            Structure = new Structure{
-                Modifyers = new List<string>(),
-                Extends = new Extends(),
-                ReturnTypeLocation = new ReturnTypeLocation(),
-                Arguments = new Arguments()
-            }
-        });
+        
 
         Console.WriteLine("Added new rule");
         LoadRuleSetIntoEditor(currentEditorRuleSet);
@@ -254,9 +162,9 @@ public partial class RuleWindow : Window
         string ruleName = ruleNameBlock.Text;
     
         // Remove the rule from the ruleset
-        if (currentEditorRuleSet.Syntax.ContainsKey(ruleName))
+        if (currentEditorRuleSet.constructRules.ContainsKey(ruleName))
         {
-            currentEditorRuleSet.Syntax.Remove(ruleName);
+            currentEditorRuleSet.constructRules.Remove(ruleName);
     
             // Save the updated ruleset
             currentEditorRuleSet.generateJsonfile((string)currentEditorButton.Tag);
@@ -353,12 +261,12 @@ public partial class RuleWindow : Window
         Ruleset ruleset = Ruleset.loadRulesetFromFile(filePath);
 
         TextBlock language = new TextBlock{
-            Text = $"Language: {ruleset.LanguageName}",
+            Text = $"Language: {ruleset.language}",
             TextAlignment = TextAlignment.Center
         };
 
         TextBlock version = new TextBlock{
-            Text = $"Version: {ruleset.LanguageVersion}",
+            Text = $"Version: {ruleset.version}",
             TextAlignment = TextAlignment.Center
         };
 
@@ -366,7 +274,7 @@ public partial class RuleWindow : Window
         RuleSetPanel.Children.Add(language);
         RuleSetPanel.Children.Add(version);
 
-        foreach (var rule in ruleset.Syntax){
+        foreach (var rule in ruleset.constructRules){
 
             //Add the Name of the rule
             TextBlock ruleName = new TextBlock{
@@ -376,29 +284,7 @@ public partial class RuleWindow : Window
 
             RuleSetPanel.Children.Add(ruleName);
 
-            //Add the discription of the rule
-            RuleSetPanel.Children.Add(generateEditorGridElement("Description:", rule.Value.RuleDescription, rule.Key));
-
-            //Add all the values asociated with a structure
-            if (rule.Value.Structure != null)
-            {
-                RuleSetPanel.Children.Add(generateEditorGridElement("KeyWord:", rule.Value.Structure.Keyword, rule.Key));
-
-                if (rule.Value.Structure.Modifyers != null)
-                {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Modifiers:", string.Join(", ", rule.Value.Structure.Modifyers), rule.Key));
-                }
-
-                if (rule.Value.Structure.Extends != null)
-                {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Extends:", rule.Value.Structure.Extends.Keyword, rule.Key));
-                }
-
-                if (rule.Value.Structure.Arguments != null)
-                {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Arguments:", string.Join(", ", [rule.Value.Structure.Arguments.Openingchar, rule.Value.Structure.Arguments.SeperatingChar, rule.Value.Structure.Arguments.Endingchar]), rule.Key));
-                }
-            }
+            
 
         }
     }
@@ -409,12 +295,12 @@ public partial class RuleWindow : Window
         Ruleset ruleset = ruleSet;
 
         TextBlock language = new TextBlock{
-            Text = $"Language: {ruleset.LanguageName}",
+            Text = $"Language: {ruleset.language}",
             TextAlignment = TextAlignment.Center
         };
 
         TextBlock version = new TextBlock{
-            Text = $"Version: {ruleset.LanguageVersion}",
+            Text = $"Version: {ruleset.version}",
             TextAlignment = TextAlignment.Center
         };
 
@@ -422,7 +308,7 @@ public partial class RuleWindow : Window
         RuleSetPanel.Children.Add(language);
         RuleSetPanel.Children.Add(version);
 
-        foreach (var rule in ruleset.Syntax){
+        foreach (var rule in ruleset.constructRules){
 
             //Add the Name of the rule
             TextBlock ruleName = new TextBlock{
@@ -432,29 +318,37 @@ public partial class RuleWindow : Window
 
             RuleSetPanel.Children.Add(ruleName);
 
-            //Add the discription of the rule
-            RuleSetPanel.Children.Add(generateEditorGridElement("Description:", rule.Value.RuleDescription, rule.Key));
+            //Add the keyword of the rule
+            TextBlock keyword = new TextBlock{
+                Text = rule.Value.keyword,
+                TextAlignment = TextAlignment.Center
+            };
 
-            //Add all the values asociated with a structure
-            if (rule.Value.Structure != null)
-            {
-                RuleSetPanel.Children.Add(generateEditorGridElement("KeyWord:", rule.Value.Structure.Keyword, rule.Key));
+            RuleSetPanel.Children.Add(keyword);
 
-                if (rule.Value.Structure.Modifyers != null)
-                {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Modifiers:", string.Join(", ", rule.Value.Structure.Modifyers), rule.Key));
-                }
+            //Add the modifier of the rule
+            TextBlock modifier = new TextBlock{
+                Text = String.Join(", ", rule.Value.modifier),
+                TextAlignment = TextAlignment.Center
+            };
 
-                if (rule.Value.Structure.Extends != null)
-                {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Extends:", rule.Value.Structure.Extends.Keyword, rule.Key));
-                }
+            RuleSetPanel.Children.Add(modifier);
 
-                if (rule.Value.Structure.Arguments != null)
-                {
-                    RuleSetPanel.Children.Add(generateEditorGridElement("Arguments:", string.Join(", ", [rule.Value.Structure.Arguments.Openingchar, rule.Value.Structure.Arguments.SeperatingChar, rule.Value.Structure.Arguments.Endingchar]), rule.Key));
-                }
-            }
+            //Add the pattern of the rule
+            TextBlock pattern = new TextBlock{
+                Text = rule.Value.pattern,
+                TextAlignment = TextAlignment.Center
+            };
+
+            RuleSetPanel.Children.Add(pattern);
+
+            //Add the scopeType of the rule
+            TextBlock scopeType = new TextBlock{
+                Text = rule.Value.scopeType,
+                TextAlignment = TextAlignment.Center
+            };
+
+            RuleSetPanel.Children.Add(scopeType);
 
         }
     }

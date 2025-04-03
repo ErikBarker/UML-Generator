@@ -9,13 +9,15 @@ namespace UMLGenerator
 {
     public class Ruleset
     {
-        public static Dictionary<string, Ruleset> fileExtentionPairs;
-        public string LanguageName { get; set; }
-        public string LanguageVersion { get; set; }
-        public string FileExtention { get; set; }
-        public Dictionary<string, SyntaxRule> Syntax { get; set; }
-
-        public static ArrayList ValidSyntaxNames = ["Class", "Variable", "Method", "Enum", "Interface"];
+        [JsonIgnore]
+        public static Dictionary<string, Ruleset> fileExtentionPairs = new Dictionary<string, Ruleset>();
+        public string language { get; set; }
+        public string version { get; set; }
+        public string[] fileExtentions { get; set; }
+        public string[] keywords {get; set;}
+        public CommentStyle commentStyle {get; set;}
+        public string scopeType {get; set;}
+        public Dictionary<string, ConstructRule> constructRules = new Dictionary<string, ConstructRule>();
 
 
         public static Ruleset loadRulesetFromFile(String filePath){
@@ -35,7 +37,12 @@ namespace UMLGenerator
                 };
 
                 Ruleset ruleset = JsonSerializer.Deserialize<Ruleset>(jsonContent, options);
-                fileExtentionPairs.Add(ruleset.FileExtention, ruleset   );
+
+                foreach (string extention in ruleset.fileExtentions)
+                {
+                    fileExtentionPairs.Add(extention, ruleset);
+                }
+                
                 return ruleset;
                 
             }
@@ -80,68 +87,26 @@ namespace UMLGenerator
         {
             if (this == null) return;
 
-            Console.WriteLine($"Language: {LanguageName} (Version: {LanguageVersion})");
-
-            foreach (var rule in Syntax)
-            {
-                Console.WriteLine($"Rule: {rule.Key}");
-                Console.WriteLine($"Description: {rule.Value.RuleDescription}");
-
-                if (rule.Value.Structure != null)
-                {
-                    Console.WriteLine($"  Keyword: {rule.Value.Structure.Keyword}");
-
-                    if (rule.Value.Structure.Modifyers != null)
-                    {
-                        Console.WriteLine($"  Modifiers: {string.Join(", ", rule.Value.Structure.Modifyers)}");
-                    }
-
-                    if (rule.Value.Structure.Extends != null)
-                    {
-                        Console.WriteLine($"  Extends: {rule.Value.Structure.Extends.Keyword}");
-                    }
-
-                    if (rule.Value.Structure.Arguments != null)
-                    {
-                        Console.WriteLine($"  Arguments: {rule.Value.Structure.Arguments.Openingchar}...{rule.Value.Structure.Arguments.Endingchar}");
-                    }
-                }
-            }
+            Console.WriteLine($"Language: {language} (Version: {version})");
         }
 
     }
 
-    public class SyntaxRule
+    public class ConstructRule
     {
-        public string RuleDescription { get; set; }
-        public Structure Structure { get; set; }
+        public string ruleDescription { get; set; }
+        public string? keyword { get; set; }
+        public List<string> modifier {get; set;}
+        public string? pattern {get; set;}
+        public string scopeType {get; set;}
+        
     }
 
-    public class Structure
-    {
-        public List<string> Modifyers { get; set; }
-        public string Keyword { get; set; }
-        public Extends Extends { get; set; }
-        public ReturnTypeLocation ReturnTypeLocation { get; set; }
-        public Arguments Arguments { get; set; }
+    public class CommentStyle{
+        public string? singleLine {get; set;}
+        public string? multiLineStart {get; set;}
+        public string? multiLineEnd {get; set;}
     }
 
-    public class Extends
-    {
-        public string Keyword { get; set; }
-    }
-
-    public class ReturnTypeLocation
-    {
-        public int? IncrimentAmountByWords { get; set; }
-        public int? IncrimentAmountByCharater { get; set; }
-        public bool? SingleReturnType { get; set; }
-    }
-
-    public class Arguments
-    {
-        public string Openingchar { get; set; }
-        public string SeperatingChar { get; set; }
-        public string Endingchar { get; set; }
-    }
+    
 }

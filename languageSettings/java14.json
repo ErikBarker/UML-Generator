@@ -1,0 +1,13 @@
+{
+  "language": "java",
+  "version": "14",
+  "fileExtention": [".java", ".Java"],
+  "keywords": [],
+  "commentStyles": {
+    "singleLine" : "//",
+    "multiLineStart" : "/*",
+    "multiLineEnd" : "*/"
+  },
+  "scopeType": null,
+  "constructRules": {}
+}

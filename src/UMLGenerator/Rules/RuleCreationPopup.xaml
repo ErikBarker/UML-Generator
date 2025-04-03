@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Rule Type:" Grid.Column="0" Grid.Row="0"/>
-        <ComboBox Name="ruleSelection" Grid.Column="1" Grid.Row="0"/>
+        <TextBox Name="ruleSelection" Grid.Column="1" Grid.Row="0"/>
 
         <Button Content="Save" Grid.Column="0" Grid.Row="1" Click="SaveButton_Click"/>
         <Button Content="Cancel" Grid.Column="1" Grid.Row="1" Click="CancelButton_Click"/>

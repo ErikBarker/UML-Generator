@@ -12,25 +12,14 @@ public partial class RuleCreationPopup : Window{
         InitializeComponent();
 
         ruleset = currentRuleSet;
-        
-        addRules();
-    }
-
-    public void addRules(){
-        foreach (string rulename in Ruleset.ValidSyntaxNames)
-        {
-            if(!ruleset.Syntax.ContainsKey(rulename)){
-                ruleSelection.Items.Add(rulename);
-            }
-                
-        }
-
 
     }
 
     public void SaveButton_Click(object sender, RoutedEventArgs e){
-        ruleSelected = ruleSelection.SelectedItem as string;
+        ruleSelected = ruleSelection.Text as string;
         DialogResult = true;
+
+        ruleset.constructRules.Add(ruleSelected, new ConstructRule());
         Close();
     }
 
