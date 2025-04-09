@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UMLDiagram;
+using UMLGenerator.CodeScanner;
 
 namespace UMLGenerator;
 
@@ -28,6 +29,7 @@ public partial class MainWindow : Window
 
         UmlCanvas.MouseMove += OnMouseMove;
         UmlCanvas.MouseUp += OnMouseUp;
+
     }
 
     public void AddClassBox_Click(object sender, RoutedEventArgs e){

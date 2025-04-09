@@ -30,6 +30,14 @@ class CodeScanner
             }
 
             currentRule = Ruleset.fileExtentionPairs[Path.GetExtension(filename)];
+
+            StreamReader reader = new StreamReader(filename);
+            string currentLine = reader.ReadLine();
+
+            while(currentLine != null){
+                Lexer.tokenize(currentLine);
+                currentLine = reader.ReadLine();
+            }
         }
     }
 
