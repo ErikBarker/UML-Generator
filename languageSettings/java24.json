@@ -1,0 +1,42 @@
+{
+    "language":"java",
+    "version":"24",
+    "fileExtenstions":[".java"],
+    "keywords":{
+        "classDefinitions":["class"],
+        "methodDefinitions":["function"],
+        "accessModifiers":["public", "private", "protected", "default", "static", "abstract", "final", "synchronized", "transient"],
+        "nativeDataTypes":["int", "float", "double", "char", "boolean", "String", "void"],
+        "conditonalStatements":["if", "else", "switch", "case", "default"],
+        "inharitance":["extends", "impliments"],
+        "grouping":["package", "import"],
+        "other":["return", "new", "try", "catch", "finally", "throw"]
+    },
+    "operations":["+", "-", "*", "/", "%", "=", "==", "!=", "&&", "||", "<", ">", "<=", ">=", "++", "--", "<<", ">>"],
+    "symbolSet":{
+        "endLine":[";"],
+        "openBlock":["(", "{"],
+        "closeBlock":[")", "}"],
+        "commentSet":{
+            "singleLine":"//",
+            "multiLineStart":"/*",
+            "multiLineEnd":"*/"
+        },
+        "anotations":["@"],
+        "generics":["<", ">"]
+    },
+    "patterns":{
+        "ConstructorPattern":{
+            "type":"constructor",
+            "patterns":"^[ \\t]*(public|private|protected)?[ \\t]*[A-Z]\\w*[ \\t]*\\(.*\\)[ \\t]*\\{"
+        },
+        "MethodPattern":{
+            "type":"method",
+            "patterns":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*\\(.*\\)[ \\t]*\\{?"
+        },
+        "FieldPattern":{
+            "type":"field",
+            "patterns":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*(=.+)?;"
+        }
+    }
+}

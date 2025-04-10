@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace UMLGenerator;
-
+//TODO redo createion window
 public partial class RuleWindow : Window
 {
 
@@ -80,7 +80,8 @@ public partial class RuleWindow : Window
         }
         
         Ruleset ruleset = new Ruleset{
-            constructRules = new Dictionary<string, ConstructRule>(),
+            //TODO redo rule creation window
+            //constructRules = new Dictionary<string, ConstructRule>(),
             language = ruleWindowCreationPopup.LanguageName,
             version = ruleWindowCreationPopup.Version
         };
@@ -161,24 +162,25 @@ public partial class RuleWindow : Window
     
         string ruleName = ruleNameBlock.Text;
     
+        //TODO Redo remove ruleset
         // Remove the rule from the ruleset
-        if (currentEditorRuleSet.constructRules.ContainsKey(ruleName))
-        {
-            currentEditorRuleSet.constructRules.Remove(ruleName);
+        // if (currentEditorRuleSet.constructRules.ContainsKey(ruleName))
+        // {
+        //     currentEditorRuleSet.constructRules.Remove(ruleName);
     
-            // Save the updated ruleset
-            currentEditorRuleSet.generateJsonfile((string)currentEditorButton.Tag);
+        //     // Save the updated ruleset
+        //     currentEditorRuleSet.generateJsonfile((string)currentEditorButton.Tag);
     
-            // Reload the rules into the editor
-            LoadRuleSetIntoEditor(currentEditorRuleSet);
+        //     // Reload the rules into the editor
+        //     LoadRuleSetIntoEditor(currentEditorRuleSet);
     
-            MessageBox.Show($"Rule '{ruleName}' deleted successfully.", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
-            LoadRuleSetIntoEditor(currentEditorRuleSet);
-        }
-        else
-        {
-            MessageBox.Show($"Rule '{ruleName}' not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-        }
+        //     MessageBox.Show($"Rule '{ruleName}' deleted successfully.", "Deleted", MessageBoxButton.OK, MessageBoxImage.Information);
+        //     LoadRuleSetIntoEditor(currentEditorRuleSet);
+        // }
+        // else
+        // {
+        //     MessageBox.Show($"Rule '{ruleName}' not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        // }
     }
 
     public void LoadCurrentRules(){
@@ -271,22 +273,22 @@ public partial class RuleWindow : Window
         };
 
 
-        RuleSetPanel.Children.Add(language);
-        RuleSetPanel.Children.Add(version);
+        // RuleSetPanel.Children.Add(language);
+        // RuleSetPanel.Children.Add(version);
 
-        foreach (var rule in ruleset.constructRules){
+        // foreach (var rule in ruleset.constructRules){
 
-            //Add the Name of the rule
-            TextBlock ruleName = new TextBlock{
-                Text = rule.Key,
-                TextAlignment = TextAlignment.Center
-            };
+        //     //Add the Name of the rule
+        //     TextBlock ruleName = new TextBlock{
+        //         Text = rule.Key,
+        //         TextAlignment = TextAlignment.Center
+        //     };
 
-            RuleSetPanel.Children.Add(ruleName);
+        //     RuleSetPanel.Children.Add(ruleName);
 
             
 
-        }
+        // }
     }
 
     public void LoadRuleSetIntoEditor(Ruleset ruleSet){
@@ -308,49 +310,50 @@ public partial class RuleWindow : Window
         RuleSetPanel.Children.Add(language);
         RuleSetPanel.Children.Add(version);
 
-        foreach (var rule in ruleset.constructRules){
+        //TODO redo rule construction
+        // foreach (var rule in ruleset.constructRules){
 
-            //Add the Name of the rule
-            TextBlock ruleName = new TextBlock{
-                Text = rule.Key,
-                TextAlignment = TextAlignment.Center
-            };
+        //     //Add the Name of the rule
+        //     TextBlock ruleName = new TextBlock{
+        //         Text = rule.Key,
+        //         TextAlignment = TextAlignment.Center
+        //     };
 
-            RuleSetPanel.Children.Add(ruleName);
+        //     RuleSetPanel.Children.Add(ruleName);
 
-            //Add the keyword of the rule
-            TextBlock keyword = new TextBlock{
-                Text = rule.Value.keyword,
-                TextAlignment = TextAlignment.Center
-            };
+        //     //Add the keyword of the rule
+        //     TextBlock keyword = new TextBlock{
+        //         Text = rule.Value.keyword,
+        //         TextAlignment = TextAlignment.Center
+        //     };
 
-            RuleSetPanel.Children.Add(keyword);
+        //     RuleSetPanel.Children.Add(keyword);
 
-            //Add the modifier of the rule
-            TextBlock modifier = new TextBlock{
-                Text = String.Join(", ", rule.Value.modifier),
-                TextAlignment = TextAlignment.Center
-            };
+        //     //Add the modifier of the rule
+        //     TextBlock modifier = new TextBlock{
+        //         Text = String.Join(", ", rule.Value.modifier),
+        //         TextAlignment = TextAlignment.Center
+        //     };
 
-            RuleSetPanel.Children.Add(modifier);
+        //     RuleSetPanel.Children.Add(modifier);
 
-            //Add the pattern of the rule
-            TextBlock pattern = new TextBlock{
-                Text = rule.Value.pattern,
-                TextAlignment = TextAlignment.Center
-            };
+        //     //Add the pattern of the rule
+        //     TextBlock pattern = new TextBlock{
+        //         Text = rule.Value.pattern,
+        //         TextAlignment = TextAlignment.Center
+        //     };
 
-            RuleSetPanel.Children.Add(pattern);
+        //     RuleSetPanel.Children.Add(pattern);
 
-            //Add the scopeType of the rule
-            TextBlock scopeType = new TextBlock{
-                Text = rule.Value.scopeType,
-                TextAlignment = TextAlignment.Center
-            };
+        //     //Add the scopeType of the rule
+        //     TextBlock scopeType = new TextBlock{
+        //         Text = rule.Value.scopeType,
+        //         TextAlignment = TextAlignment.Center
+        //     };
 
-            RuleSetPanel.Children.Add(scopeType);
+        //     RuleSetPanel.Children.Add(scopeType);
 
-        }
+        // }
     }
 
     public Grid generateEditorGridElement(String label, String text, String rule){

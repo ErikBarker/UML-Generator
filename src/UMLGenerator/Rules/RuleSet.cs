@@ -14,10 +14,10 @@ namespace UMLGenerator
         public string language { get; set; }
         public string version { get; set; }
         public string[] fileExtentions { get; set; }
-        public string[] keywords {get; set;}
-        public CommentStyle commentStyle {get; set;}
-        public string scopeType {get; set;}
-        public Dictionary<string, ConstructRule> constructRules = new Dictionary<string, ConstructRule>();
+        public keywordSet keywords {get; set;}
+        public string[] operations {get; set;}
+        public symbolSet symbolSet {get; set;}
+        public Dictionary<string, patternSet> patterns = new Dictionary<string, patternSet>();
 
 
         public static Ruleset loadRulesetFromFile(String filePath){
@@ -92,20 +92,67 @@ namespace UMLGenerator
 
     }
 
-    public class ConstructRule
-    {
-        public string ruleDescription { get; set; }
-        public string? keyword { get; set; }
-        public List<string> modifier {get; set;}
-        public string? pattern {get; set;}
-        public string scopeType {get; set;}
-        
+    
+
+    public class keywordSet{
+        public string[]? classDefinitions;
+        public string[]? methodDefinitions;
+        public string[]? accessModifiers;
+        public string[]? nativeDataTypes;
+        public string[]? conditonalStatements;
+        public string[]? inharitance;
+        public string[]? grouping;
+        public string[]? other;
+
+        public bool contains(string value){
+            bool contains = false;
+            if(classDefinitions != null)
+            contains = classDefinitions.Contains(value) || contains;
+            
+            if(methodDefinitions != null)
+            contains = methodDefinitions.Contains(value) || contains;
+            
+            if(accessModifiers != null)
+            contains = accessModifiers.Contains(value) || contains;
+            
+            if(nativeDataTypes != null)
+            contains = nativeDataTypes.Contains(value) || contains;
+            
+            if(conditonalStatements != null)
+            contains = conditonalStatements.Contains(value) || contains;
+            
+            if(inharitance != null)
+            contains = inharitance.Contains(value) || contains;
+            
+            if(grouping != null)
+            contains = grouping.Contains(value) || contains;
+            
+            if(other != null)
+            contains = other.Contains(value) || contains;
+
+            return contains;
+        }
+    }
+
+    public class symbolSet{
+        public string? endLine {get; set;}
+        public string? openBlock {get; set;}
+        public string? closeBlock {get; set;}
+        public CommentStyle? commentSet;
+        public string[]? anotations {get; set;}
+        public string[]? generics {get; set;}
+
     }
 
     public class CommentStyle{
         public string? singleLine {get; set;}
         public string? multiLineStart {get; set;}
         public string? multiLineEnd {get; set;}
+    }
+
+    public class patternSet{
+        public string type;
+        public string pattern;
     }
 
     

@@ -19,7 +19,8 @@ public partial class RuleCreationPopup : Window{
         ruleSelected = ruleSelection.Text as string;
         DialogResult = true;
 
-        ruleset.constructRules.Add(ruleSelected, new ConstructRule());
+        //TODO redo rule creation proccess
+        //ruleset.constructRules.Add(ruleSelected, new ConstructRule());
         Close();
     }
 

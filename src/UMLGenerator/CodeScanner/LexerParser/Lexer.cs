@@ -26,7 +26,7 @@ class Lexer
                 }
 
                 string word = fileData.Substring(startIndex, i-startIndex);
-                string type = CodeScanner.getCurrentRule().keywords.Contains(word) ? "keyword" : "identifier";
+                string type = CodeScanner.getCurrentRule().keywords.contains(word) ? "keyword" : "identifier";
 
                 tokens.Add(new Token{type = type, value = word, location = startIndex});
                 continue;
