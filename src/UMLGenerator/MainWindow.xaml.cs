@@ -31,8 +31,9 @@ public partial class MainWindow : Window
         UmlCanvas.MouseUp += OnMouseUp;
 
         Ruleset testRuleset = Ruleset.loadRulesetFromFile("C:\\Users\\erikb\\Documents\\GitHub\\UML-Generator\\languageSettings\\java24.json");
-        CodeScanner.CodeScanner.scanLocation = "testFiles";
+        CodeScanner.CodeScanner.scanLocation = "C:\\Users\\erikb\\Documents\\GitHub\\UML-Generator\\testFiles";
         CodeScanner.CodeScanner.startScan();
+        CodeScanner.Lexer.displayTokens();
     }
 
     public void AddClassBox_Click(object sender, RoutedEventArgs e){

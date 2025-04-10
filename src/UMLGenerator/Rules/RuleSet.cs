@@ -11,12 +11,19 @@ namespace UMLGenerator
     {
         [JsonIgnore]
         public static Dictionary<string, Ruleset> fileExtentionPairs = new Dictionary<string, Ruleset>();
+        [JsonInclude]
         public string language { get; set; }
+        [JsonInclude]
         public string version { get; set; }
+        [JsonInclude]
         public string[] fileExtentions { get; set; }
+        [JsonInclude]
         public keywordSet keywords {get; set;}
+        [JsonInclude]
         public string[] operations {get; set;}
+        [JsonInclude]
         public symbolSet symbolSet {get; set;}
+        [JsonInclude]
         public Dictionary<string, patternSet> patterns = new Dictionary<string, patternSet>();
 
 
@@ -31,7 +38,7 @@ namespace UMLGenerator
 
                 String jsonContent = File.ReadAllText(filePath);
                 JsonSerializerOptions options = new JsonSerializerOptions{
-                    PropertyNameCaseInsensitive = true,
+                    PropertyNameCaseInsensitive = false,
                     ReadCommentHandling = JsonCommentHandling.Skip,
                     AllowTrailingCommas = true
                 };
@@ -48,7 +55,7 @@ namespace UMLGenerator
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading ruleset: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error loading ruleset: {ex.Message} {ex.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return null;
             }
         }
@@ -95,38 +102,46 @@ namespace UMLGenerator
     
 
     public class keywordSet{
+        [JsonPropertyName("classDefinitions")][JsonInclude]
         public string[]? classDefinitions;
+        [JsonPropertyName("methodDefinitions")][JsonInclude]
         public string[]? methodDefinitions;
+        [JsonPropertyName("accessModifiers")][JsonInclude]
         public string[]? accessModifiers;
+        [JsonPropertyName("nativeDataTypes")][JsonInclude]
         public string[]? nativeDataTypes;
+        [JsonPropertyName("conditonalStatements")][JsonInclude]
         public string[]? conditonalStatements;
+        [JsonPropertyName("inharitance")][JsonInclude]
         public string[]? inharitance;
+        [JsonPropertyName("grouping")][JsonInclude]
         public string[]? grouping;
+        [JsonPropertyName("other")][JsonInclude]
         public string[]? other;
 
         public bool contains(string value){
             bool contains = false;
             if(classDefinitions != null)
             contains = classDefinitions.Contains(value) || contains;
-            
+
             if(methodDefinitions != null)
             contains = methodDefinitions.Contains(value) || contains;
-            
+
             if(accessModifiers != null)
             contains = accessModifiers.Contains(value) || contains;
-            
+
             if(nativeDataTypes != null)
             contains = nativeDataTypes.Contains(value) || contains;
-            
+
             if(conditonalStatements != null)
             contains = conditonalStatements.Contains(value) || contains;
-            
+
             if(inharitance != null)
             contains = inharitance.Contains(value) || contains;
-            
+
             if(grouping != null)
             contains = grouping.Contains(value) || contains;
-            
+
             if(other != null)
             contains = other.Contains(value) || contains;
 
@@ -135,24 +150,72 @@ namespace UMLGenerator
     }
 
     public class symbolSet{
-        public string? endLine {get; set;}
-        public string? openBlock {get; set;}
-        public string? closeBlock {get; set;}
-        public CommentStyle? commentSet;
+        [JsonInclude]
+        public string[]? endLine {get; set;}
+        [JsonInclude]
+        public string[]? openBlock {get; set;}
+        [JsonInclude]
+        public string[]? closeBlock {get; set;}
+        [JsonInclude]
+        public CommentStyle? commentSet {get; set;}
+        [JsonInclude]
         public string[]? anotations {get; set;}
+        [JsonInclude]
         public string[]? generics {get; set;}
+
+        public bool Contains(string value){
+            bool contains = false;
+            if(endLine != null)
+            contains = endLine.Contains(value) || contains;
+
+            if(openBlock != null)
+            contains = openBlock.Contains(value) || contains;
+
+            if(closeBlock != null)
+            contains = closeBlock.Contains(value) || contains;
+
+            if(anotations != null)
+            contains = anotations.Contains(value) || contains;
+
+            if(generics != null)
+            contains = generics.Contains(value) || contains;
+
+            if(commentSet != null)
+            contains = commentSet.Contains(value) || contains;
+
+            return contains;
+        }
 
     }
 
     public class CommentStyle{
+        [JsonInclude]
         public string? singleLine {get; set;}
+        [JsonInclude]
         public string? multiLineStart {get; set;}
+        [JsonInclude]
         public string? multiLineEnd {get; set;}
+
+        public bool Contains(string value){
+            bool contains = false;
+            if(singleLine != null)
+            contains = singleLine.Contains(value) || contains;
+
+            if(multiLineStart != null)
+            contains = multiLineStart.Contains(value) || contains;
+
+            if(multiLineEnd != null)
+            contains = multiLineEnd.Contains(value) || contains;
+
+            return contains;
+        }
     }
 
     public class patternSet{
-        public string type;
-        public string pattern;
+        [JsonInclude]
+        public string type {get; set;}
+        [JsonInclude]
+        public string pattern {get; set;}
     }
 
     

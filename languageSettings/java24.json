@@ -1,7 +1,7 @@
 {
     "language":"java",
     "version":"24",
-    "fileExtenstions":[".java"],
+    "fileExtentions":[".java"],
     "keywords":{
         "classDefinitions":["class"],
         "methodDefinitions":["function"],
@@ -28,15 +28,15 @@
     "patterns":{
         "ConstructorPattern":{
             "type":"constructor",
-            "patterns":"^[ \\t]*(public|private|protected)?[ \\t]*[A-Z]\\w*[ \\t]*\\(.*\\)[ \\t]*\\{"
+            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*[A-Z]\\w*[ \\t]*\\(.*\\)[ \\t]*\\{"
         },
         "MethodPattern":{
             "type":"method",
-            "patterns":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*\\(.*\\)[ \\t]*\\{?"
+            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*\\(.*\\)[ \\t]*\\{?"
         },
         "FieldPattern":{
             "type":"field",
-            "patterns":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*(=.+)?;"
+            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*(=.+)?;"
         }
     }
 }

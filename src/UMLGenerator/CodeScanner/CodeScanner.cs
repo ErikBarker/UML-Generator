@@ -8,7 +8,7 @@ class CodeScanner
     private static String currentFile;
     public static String scanLocation;
 
-    private static List<String> files;
+    private static List<String> files = new List<String>();
 
     public static void startScan(){
         if (!Directory.Exists(scanLocation)){
@@ -34,15 +34,17 @@ class CodeScanner
             StreamReader reader = new StreamReader(filename);
             string currentLine = reader.ReadLine();
 
+            int line = 0;
             while(currentLine != null){
-                Lexer.tokenize(currentLine);
+                Lexer.tokenize(currentLine, line);
+                line++;
                 currentLine = reader.ReadLine();
             }
         }
     }
 
     private static void searchDirs(String dir){
-        if (!Directory.Exists("scanLocation")){
+        if (!Directory.Exists(dir)){
             throw new FileNotFoundException();
         }
 

@@ -3,11 +3,11 @@ using System.IO;
 namespace UMLGenerator.CodeScanner;
 class Lexer
 {
-    private static List<Token> tokens;
+    private static List<Token> tokens = new List<Token>();
     private static int currentToken = 0;
 
-    public static void tokenize(String fileData){
-        tokens = new List<Token>();
+    public static void tokenize(String fileData, int lineNumber){
+
         
         for (int i = 0; i < fileData.Length; i++)
         {
@@ -32,13 +32,13 @@ class Lexer
                 continue;
             }
 
-            if ("{}();,".Contains(c))
+            if (CodeScanner.getCurrentRule().symbolSet.Contains(c.ToString()))
             {
-                tokens.Add(new Token{type = "symbol", value = c.ToString(), location = i});
+                tokens.Add(new Token{type = "symbol", value = c.ToString(), line = lineNumber, location = i});
                 continue;
             }
 
-            tokens.Add(new Token{type = "unknown", value = c.ToString(), location = i});
+            tokens.Add(new Token{type = "unknown", value = c.ToString(), line = lineNumber, location = i});
         }
     }
 
@@ -59,6 +59,14 @@ class Lexer
     public static void clear(){
         currentToken = 0;
         tokens.Clear();
+    }
+
+    public static void displayTokens(){
+
+        foreach (Token tok in tokens)
+        {
+            tok.display();
+        }
     }
 
     public static List<Token> GetTokens() => tokens;
