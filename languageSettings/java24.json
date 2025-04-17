@@ -26,6 +26,12 @@
         "generics":["<", ">"]
     },
     "patterns":{
+        "Import":{
+            "type":"import",
+            "pattern":"^^[ \\t]*package[ \\t]+[\\w\\.]+[ \\t]*;",
+            "minTokens":2,
+            "maxTokens":3
+        },
         "ClassPattern":{
             "type":"class",
             "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*(abstract|final)?[ \\t]*class[ \\t]+\\w+[ \\t]*\\{?",
@@ -49,6 +55,6 @@
             "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*(=.+)?;",
             "minTokens":2,
             "maxTokens":5
-        }
+        }        
     }
 }

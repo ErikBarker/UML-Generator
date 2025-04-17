@@ -18,6 +18,10 @@ class AbstractSyntaxTree
         {
             for (int i = 0; i < tokens.Count; i++)
             {
+                if (tokens[i].isConsumed)
+                {
+                    continue;
+                }
                 ASTNode node;
 
                 //Class pattern
@@ -44,6 +48,7 @@ class AbstractSyntaxTree
     
                         for (int j = i; j < i + matchEnd && j < tokens.Count; j++)
                         {
+                            tokens[j].isConsumed = true;
                         if (CodeScanner.getCurrentRule().keywords.accessModifiers.Contains(tokens[j].value))
                         {
                             acessToken = tokens[j];

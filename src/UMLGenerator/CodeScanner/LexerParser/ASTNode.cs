@@ -24,7 +24,7 @@ class ASTNode
         {
             for (int i = 0; i < children.Count; i++)
             {
-                Console.WriteLine("|");
+                Console.Write("| ");
                 children.ElementAt(i).display();
             }
         }
