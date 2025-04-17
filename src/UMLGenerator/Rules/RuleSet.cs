@@ -216,6 +216,10 @@ namespace UMLGenerator
         public string type {get; set;}
         [JsonInclude]
         public string pattern {get; set;}
+        [JsonInclude]
+        public int minTokens {get; set;}
+        [JsonInclude]
+        public int maxTokens {get; set;}
     }
 
     

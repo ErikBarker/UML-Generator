@@ -33,7 +33,9 @@ public partial class MainWindow : Window
         Ruleset testRuleset = Ruleset.loadRulesetFromFile("C:\\Users\\erikb\\Documents\\GitHub\\UML-Generator\\languageSettings\\java24.json");
         CodeScanner.CodeScanner.scanLocation = "C:\\Users\\erikb\\Documents\\GitHub\\UML-Generator\\testFiles";
         CodeScanner.CodeScanner.startScan();
-        CodeScanner.Lexer.displayTokens();
+        Lexer.displayTokens();
+        AbstractSyntaxTree tree = AbstractSyntaxTree.parseList(Lexer.GetTokens());
+        tree.displayTree();
     }
 
     public void AddClassBox_Click(object sender, RoutedEventArgs e){

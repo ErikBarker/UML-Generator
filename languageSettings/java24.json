@@ -26,17 +26,29 @@
         "generics":["<", ">"]
     },
     "patterns":{
+        "ClassPattern":{
+            "type":"class",
+            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*(abstract|final)?[ \\t]*class[ \\t]+\\w+[ \\t]*\\{?",
+            "minTokens":2,
+            "maxTokens":5
+        },
         "ConstructorPattern":{
             "type":"constructor",
-            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*[A-Z]\\w*[ \\t]*\\(.*\\)[ \\t]*\\{"
+            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*[A-Z]\\w*[ \\t]*\\(.*\\)[ \\t]*\\{?",
+            "minTokens":2,
+            "maxTokens":5
         },
         "MethodPattern":{
             "type":"method",
-            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*\\(.*\\)[ \\t]*\\{?"
+            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*\\(.*\\)[ \\t]*\\{?",
+            "minTokens":2,
+            "maxTokens":5
         },
         "FieldPattern":{
             "type":"field",
-            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*(=.+)?;"
+            "pattern":"^[ \\t]*(public|private|protected)?[ \\t]*(static)?[ \\t]*\\w+[ \\t]+\\w+[ \\t]*(=.+)?;",
+            "minTokens":2,
+            "maxTokens":5
         }
     }
 }
