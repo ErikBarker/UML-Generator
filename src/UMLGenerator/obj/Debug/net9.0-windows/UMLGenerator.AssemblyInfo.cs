@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UMLGenerator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b914739c2cb469528a49c00c3ba0b50ef6d2e287")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+68c432965886d8eb0245c128ed085b799c11562d")]
 [assembly: System.Reflection.AssemblyProductAttribute("UMLGenerator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UMLGenerator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
