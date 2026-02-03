@@ -8,6 +8,6 @@ class Token
     public bool isConsumed = false;
 
     public void display(){
-        Console.WriteLine("Type: " + type + ", Value: " + value + ", Line: " + line + ", Loc: " + location);
+        System.Diagnostics.Debug.WriteLine("Type: " + type + ", Value: " + value + ", Line: " + line + ", Loc: " + location);
     }
 }

@@ -124,7 +124,7 @@ public partial class RuleWindow : Window
         }
         
 
-        Console.WriteLine("Added new rule");
+        System.Diagnostics.Debug.WriteLine("Added new rule");
         LoadRuleSetIntoEditor(currentEditorRuleSet);
     }
 
@@ -249,7 +249,7 @@ public partial class RuleWindow : Window
     public void RuleButton_Click(object sender, RoutedEventArgs e){
         if (sender is Button button && button.Tag is string filePath)
         {
-            Console.WriteLine("Open " + button.Content);
+            System.Diagnostics.Debug.WriteLine("Open " + button.Content);
             currentEditorButton = button;
             currentEditorRuleSet = Ruleset.loadRulesetFromFile(filePath);
             LoadJsonIntoEditor(filePath);

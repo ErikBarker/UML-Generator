@@ -94,7 +94,7 @@ namespace UMLGenerator
         {
             if (this == null) return;
 
-            Console.WriteLine($"Language: {language} (Version: {version})");
+            System.Diagnostics.Debug.WriteLine($"Language: {language} (Version: {version})");
         }
 
     }

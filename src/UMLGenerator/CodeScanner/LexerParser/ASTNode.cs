@@ -19,12 +19,12 @@ class ASTNode
     }
 
     public void display(){
-        Console.WriteLine("- "+type+" : " + value);
+        System.Diagnostics.Debug.WriteLine("- "+type+" : " + value);
         if (children.Count > 0)
         {
             for (int i = 0; i < children.Count; i++)
             {
-                Console.Write("| ");
+                System.Diagnostics.Debug.Write("| ");
                 children.ElementAt(i).display();
             }
         }

@@ -50,7 +50,7 @@ public partial class MainWindow : Window
     }
 
     public void RuleMenu_Click(object sender, RoutedEventArgs e){
-        Console.WriteLine("Createing Rule Window");
+        System.Diagnostics.Debug.WriteLine("Createing Rule Window");
 
         RuleWindow ruleWindow = new RuleWindow();
 
